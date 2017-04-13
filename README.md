@@ -1,29 +1,21 @@
-# README #
+# Music Community for Web Programming #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Final Term Project in Web Programming lecture.
 
-### What is this repository for? ###
+## Using tools ##
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* NodeJS
+* mongoDB
 
-### How do I get set up? ###
+### Project Objective ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* To make people listen to music, handle with instruments by using webpage outside due to overtime work or busy days.
+* To create a sympathetic community with several music genres.
 
-### Contribution guidelines ###
+### Features ###
 
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Sign up with OAuth 2.0 (using Passport Module) - Facebook, Google, etc and Sign in.
+* Boards :: Movie, Mentor, Musicsheet
+* Board Feat :: Category, Article Selector, Page numbering
+* Search :: frequently keywords, real time keyword
+* Chart :: Popular Keywords, Top 10 chart (using cURL Parsing) - melon
