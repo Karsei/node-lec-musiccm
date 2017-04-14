@@ -5,7 +5,7 @@ Final Term Project in Web Programming lecture.
 ## Using tools ##
 
 * NodeJS
-* mongoDB
+* MySQL
 
 ### Project Objective ###
 
