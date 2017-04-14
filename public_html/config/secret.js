@@ -26,5 +26,11 @@ module.exports = {
                'client_id': '',
                'callback_url': '/auth/login/kakao/callback'
           }
+     },
+     'sql': {
+          'host': 'localhost',
+          'user': 'musiccm',
+          'database': 'musiccm',
+          'password': 'musiccmpass'
      }
 }

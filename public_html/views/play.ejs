@@ -7,7 +7,7 @@
           <title>Music Community</title>
 
           <!-- Bootstrap CSS -->
-          <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+          <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
 
           <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -15,7 +15,7 @@
           <![endif]-->
 
           <!-- Custom Fix -->
-          <link rel="stylesheet" type="text/css" href="css/custom.css">
+          <link rel="stylesheet" type="text/css" href="../../css/custom.css">
      </head>
 
      <body>
@@ -37,9 +37,9 @@
                               <li class="active dropdown">
                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티<span class="caret"></span></a>
                                    <ul class="dropdown-menu">
-                                        <li class="active"><a href="/play">연주 게시판</a></li>
-                                        <li class=""><a href="/mentor">멘토 게시판</a></li>
-                                        <li class=""><a href="/sheet">악보 게시판</a></li>
+                                        <li class="active"><a href="/board/play">연주 게시판</a></li>
+                                        <li class=""><a href="/board/mentor">멘토 게시판</a></li>
+                                        <li class=""><a href="/board/sheet">악보 게시판</a></li>
                                    </ul>
                               </li>
                          </ul>
@@ -63,14 +63,15 @@
                <div class="row">
                     <div class="col-sm-2">
                          <ul class="nav nav-pills nav-stacked">
-                              <li role="presentation" class="active">전체</li>
-                              <li role="presentation">바이올린</li>
-                              <li role="presentation">피아노</li>
-                              <li role="presentation">기타</li>
-                              <li role="presentation">드럼</li>
+                              <li role="presentation" class="active"><a href="">전체</a></li>
+                              <li role="presentation"><a href="">바이올린</a></li>
+                              <li role="presentation"><a href="">피아노</a></li>
+                              <li role="presentation"><a href="">기타</a></li>
+                              <li role="presentation"><a href="">드럼</a></li>
                          </ul>
                     </div>
                     <div class="col-sm-10">
+                         <hr>
                          <ul class="nav nav-pills">
                               <li role="presentation" class="dropdown">
                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">카테고리 <span class="caret"></span></a>
@@ -82,7 +83,7 @@
                                    <li>드럼</li>
                               </ul>
                          </ul>
-                         <table class="table table-hover">
+                         <table class="table table-hover board-play">
                               <thead>
                                    <tr>
                                         <th>#</th>
@@ -96,7 +97,7 @@
                               </thead>
                               <tbody>
                                    <tr>
-                                        <td>ㅁ</td>
+                                        <td><input type="checkbox"></td>
                                         <td>5</td>
                                         <td>기타</td>
                                         <td>이것이 제목</td>
@@ -105,7 +106,7 @@
                                         <td>54</td>
                                    </tr>
                                    <tr>
-                                        <td>ㅁ</td>
+                                        <td><input type="checkbox"></td>
                                         <td>4</td>
                                         <td>바이올린</td>
                                         <td>This is a title</td>
@@ -114,7 +115,7 @@
                                         <td>9</td>
                                    </tr>
                                    <tr>
-                                        <td>ㅁ</td>
+                                        <td><input type="checkbox"></td>
                                         <td>3</td>
                                         <td>피아노</td>
                                         <td>1237584951312</td>
@@ -123,7 +124,7 @@
                                         <td>102</td>
                                    </tr>
                                    <tr>
-                                        <td>ㅁ</td>
+                                        <td><input type="checkbox"></td>
                                         <td>2</td>
                                         <td>기타</td>
                                         <td>가나다라마바</td>
@@ -132,7 +133,7 @@
                                         <td>25</td>
                                    </tr>
                                    <tr>
-                                        <td>ㅁ</td>
+                                        <td><input type="checkbox"></td>
                                         <td>1</td>
                                         <td>드럼</td>
                                         <td>가나다라마바사아자차카타파하</td>
@@ -143,26 +144,31 @@
                               </tbody>
                          </table>
 
-                         <button type="button" class="btn btn-default" name="button">목록</button>
-                         <button type="button" class="btn btn-primary" name="button">글쓰기</button>
-
-                         <nav aria-label="Page navigation">
-                              <ul class="pagination">
-                                   <li>
-                                        <a href="#" aria-label="Previous">
-                                             <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                   </li>
-                                   <li class="active"><a href="#">1</a></li>
-                                   <li class="disabled"><a href="#">2</a></li>
-                                   <li class="disabled"><a href="#">3</a></li>
-                                   <li>
-                                        <a href="#" aria-label="Next">
-                                             <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                   </li>
-                              </ul>
-                         </nav>
+                         <div class="board-bottom">
+                              <a class="btn btn-default" href="/board/play/list" role="button">목록</a>
+                              <div class="board-bottom-right">
+                                   <a class="btn btn-primary" href="/board/play/write" role="button">글쓰기</a>
+                              </div>
+                              <div class="board-pagination">
+                                   <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                             <li>
+                                                  <a href="#" aria-label="Previous">
+                                                       <span aria-hidden="true">&laquo;</span>
+                                                  </a>
+                                             </li>
+                                             <li class="active"><a href="#">1</a></li>
+                                             <li class="disabled"><a href="#">2</a></li>
+                                             <li class="disabled"><a href="#">3</a></li>
+                                             <li>
+                                                  <a href="#" aria-label="Next">
+                                                       <span aria-hidden="true">&raquo;</span>
+                                                  </a>
+                                             </li>
+                                        </ul>
+                                   </nav>
+                              </div>
+                         </div>
                     </div>
                </div>
           </div>
@@ -171,7 +177,7 @@
           <script src="//code.jquery.com/jquery.js"></script>
           <!-- Bootstrap JavaScript -->
           <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="js/bootstrap.min.js"></script>
+          <script src="../../js/bootstrap.min.js"></script>
           <!-- Tether -->
           <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
      </body>

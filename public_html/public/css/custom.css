@@ -58,3 +58,24 @@ table > thead > tr > th {
  * [Home]
  *
 ******************************************************/
+.board-bottom {
+     position: relative;
+}
+.board-bottom .board-bottom-right {
+     position: absolute;
+     top: 0px;
+     right: 0px;
+}
+.board-bottom .board-pagination {
+     text-align: center;
+}
+
+/*****************************************************
+ *
+ * [Play Board]
+ *
+******************************************************/
+/*.board-play > tbody > tr > td:nth-child(1),*/
+.board-play > tbody > tr > td:not(:nth-child(4)) {
+     text-align: center;
+}
