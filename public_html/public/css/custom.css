@@ -11,8 +11,15 @@ Last Updated. 2017-04-14
  *
 ******************************************************/
 body {
-     padding-top: 48px;
+     padding-top: 70px;
      overflow-x: hidden;
+}
+
+a > .glyphicon {
+     margin-right: 5px;
+}
+table > thead > tr > th {
+     text-align: center;
 }
 
 /****************************************
@@ -20,23 +27,31 @@ body {
 ****************************************/
 @media screen and (max-width: 1199px) {
      body {
-          padding-top: 48px;
+          padding-top: 70px;
      }
 }
 
 @media screen and (max-width: 991px) {
      body {
-          padding-top: 96px;
+          padding-top: 118px;
      }
 }
 
 /** For Smartphone **/
 @media screen and (max-width: 767px) {
      body {
-          padding-top: 48px;
+          padding-top: 70px;
      }
 }
 
+/*****************************************************
+ *
+ * [Navi]
+ *
+******************************************************/
+.navbar-form > input {
+     padding: 5px 10px;
+}
 
 /*****************************************************
  *

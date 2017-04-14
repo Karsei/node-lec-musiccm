@@ -29,5 +29,9 @@ router.get('/mentor', function(req, res, next) {
 router.get('/sheet', function(req, res, next) {
      res.render('sheet', { title: HOMEPAGE_TITLE });
 });
+/* GET - Mypage */
+router.get('/mypage', function(req, res, next) {
+     res.render('mypage', { title: HOMEPAGE_TITLE });
+});
 
 module.exports = router;
