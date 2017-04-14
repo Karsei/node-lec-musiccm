@@ -1,0 +1,45 @@
+/**
+Music Community for Web Programming
+
+Written. 2017-04-14
+Last Updated. 2017-04-14
+**/
+
+/*****************************************************
+ *
+ * [COMMON SETTING]
+ *
+******************************************************/
+body {
+     padding-top: 48px;
+     overflow-x: hidden;
+}
+
+/****************************************
+ * [RESPONSIVE]
+****************************************/
+@media screen and (max-width: 1199px) {
+     body {
+          padding-top: 48px;
+     }
+}
+
+@media screen and (max-width: 991px) {
+     body {
+          padding-top: 96px;
+     }
+}
+
+/** For Smartphone **/
+@media screen and (max-width: 767px) {
+     body {
+          padding-top: 48px;
+     }
+}
+
+
+/*****************************************************
+ *
+ * [Home]
+ *
+******************************************************/
