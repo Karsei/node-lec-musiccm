@@ -9,10 +9,10 @@ var config = require('./config/secret.js');
 
 // PASSPORT
 var passport = require('passport');
-var passport_local = require('passport-local').Strategy;
-var passport_naver = require('passport-naver').Strategy;
-var passport_facebook = require('passport-facebook').Strategy;
-var passport_kakao = require('passport-kakao').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
+var NaverStrategy = require('passport-naver').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var KakaoStrategy = require('passport-kakao').Strategy;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -28,7 +28,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
      done(null, obj);
 });
-passport.use(new NaverStrategy({
+/*passport.use(new NaverStrategy({
           clientID: config.federation.naver.client_id,
           clientSecret: config.federation.naver.secret_id,
           callbackURL: config.federation.naver.callback_url,
@@ -57,12 +57,12 @@ passport.use(new KakaoStrategy({
                console.log(" - REFRESH TOKEN: " + refreshToken);
                return done(null, profile);
           });
-          /*User.findOrCreate({
-               userId: profile.id
-               }, function (err, user) {
-                    return done(err, user);
-               }
-          );*/
+          //User.findOrCreate({
+          //     userId: profile.id
+          //     }, function (err, user) {
+          //          return done(err, user);
+          //     }
+          //);
      }
 ));
 passport.use(new FacebookStrategy({
@@ -81,7 +81,7 @@ passport.use(new FacebookStrategy({
                return done(null, profile);
           });
      }
-));
+));*/
 
 var app = express();
 
