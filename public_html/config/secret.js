@@ -13,18 +13,14 @@ module.exports = {
      },
      'federation': {
           'naver': {
-               'client_id': '',
-               'secret_id': '',
+               'client_id': 'EYLUzQM0k_ZoddYsPr97',
+               'secret_id': '88cKQcCZg5',
                'callback_url': '/auth/login/naver/callback'
           },
           'facebook': {
-               'client_id': '',
-               'secret_id': '',
+               'client_id': '1324170261032318',
+               'secret_id': 'dc766c8d4c934276643c43d9f0e913a8',
                'callback_url': '/auth/login/facebook/callback'
-          },
-          'kakao': {
-               'client_id': '',
-               'callback_url': '/auth/login/kakao/callback'
           }
      },
      'sql': {

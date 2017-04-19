@@ -12,7 +12,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var NaverStrategy = require('passport-naver').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var KakaoStrategy = require('passport-kakao').Strategy;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -28,7 +27,7 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
      done(null, obj);
 });
-/*passport.use(new NaverStrategy({
+passport.use(new NaverStrategy({
           clientID: config.federation.naver.client_id,
           clientSecret: config.federation.naver.secret_id,
           callbackURL: config.federation.naver.callback_url,
@@ -38,31 +37,11 @@ passport.deserializeUser(function (obj, done) {
           process.nextTick(function () {
                var _profile = profile._json;
 
-               console.log(" - ACCESS TOKEN: " + accessToken);
-               console.log(" - REFRESH TOKEN: " + refreshToken);
+               console.log(profile);
+               console.log(" - [NAVER] ACCESS TOKEN: " + accessToken);
+               console.log(" - [NAVER] REFRESH TOKEN: " + refreshToken);
                return done(null, profile);
           });
-     }
-));
-passport.use(new KakaoStrategy({
-          clientID: config.federation.kakao.client_id,
-          callbackURL: config.federation.kakao.callback_url,
-
-          passReqToCallback: true
-     }, function(request, accessToken, refreshToken, profile, done) {
-          process.nextTick(function () {
-               var _profile = profile._json;
-
-               console.log(" - ACCESS TOKEN: " + accessToken);
-               console.log(" - REFRESH TOKEN: " + refreshToken);
-               return done(null, profile);
-          });
-          //User.findOrCreate({
-          //     userId: profile.id
-          //     }, function (err, user) {
-          //          return done(err, user);
-          //     }
-          //);
      }
 ));
 passport.use(new FacebookStrategy({
@@ -76,12 +55,12 @@ passport.use(new FacebookStrategy({
           process.nextTick(function () {
                var _profile = profile._json;
 
-               console.log(" - ACCESS TOKEN: " + accessToken);
-               console.log(" - REFRESH TOKEN: " + refreshToken);
+               console.log(" - [Facebook] ACCESS TOKEN: " + accessToken);
+               console.log(" - [Facebook] REFRESH TOKEN: " + refreshToken);
                return done(null, profile);
           });
      }
-));*/
+));
 
 var app = express();
 
@@ -133,18 +112,11 @@ app.get('/auth/login/facebook/callback',
           res.redirect('/');
      }
 );
-// Passport - Kakao 연동
-app.get('/auth/login/kakao',
-     passport.authenticate('kakao')
-);
-app.get('/auth/login/kakao/callback',
-     passport.authenticate('kakao', {
-          //successRedirect: '/',
-          failureRedirect: '/'
-     }), function (req, res) {
-          res.redirect('/');
-     }
-);
+// 로그아웃
+app.get('/logout', function (req, res) {
+     req.logout();
+     res.redirect('/');
+});
 
 
 app.use('/', index);

@@ -37,19 +37,19 @@
                               <li class="dropdown">
                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티<span class="caret"></span></a>
                                    <ul class="dropdown-menu">
-                                        <li class=""><a href="/board/play">연주 게시판</a></li>
-                                        <li class=""><a href="/board/mentor">멘토 게시판</a></li>
-                                        <li class=""><a href="/board/sheet">악보 게시판</a></li>
+                                        <li class=""><a href="/play">연주 게시판</a></li>
+                                        <li class=""><a href="/mentor">멘토 게시판</a></li>
+                                        <li class=""><a href="/sheet">악보 게시판</a></li>
                                    </ul>
                               </li>
                          </ul>
-
                          <ul class="nav navbar-nav navbar-right">
                               <li class="active">
                                    <a href="/mypage"><span class="glyphicon glyphicon-user"></span>내 정보</a>
                               </li>
-                              <li class="">
-                                   <a href="/login"><span class="glyphicon glyphicon-off"></span>로그인</a>
+                              <li class=""><% if (!loginState) { %>
+                                   <a href="/auth/login/naver"><span class="glyphicon glyphicon-off"></span>로그인</a><% } else { %>
+                                   <a href="/logout"><span class="glyphicon glyphicon-off"></span>로그아웃</a><% } %>
                               </li>
                          </ul>
                          <form class="navbar-form navbar-right">
@@ -58,13 +58,12 @@
                     </div>
                </div>
           </nav>
-
           <div class="container">
                <div class="row">
                     <div class="col-sm-2">
                          <ul class="nav nav-pills nav-stacked">
-                              <li role="presentation" class="active">개요</li>
-                              <li role="presentation">기본 설정</li>
+                              <li role="presentation" class="active"><a href="#">개요</a></li>
+                              <li role="presentation"><a href="#">기본 설정</a></li>
                          </ul>
                     </div>
                     <div class="col-sm-10">
@@ -77,6 +76,9 @@
                                    <h3>내가 쓴 댓글</h3>
                                    <p>댓글들...</p>
                               </div>
+                         </div>
+                         <div class="well">
+                              <%= loginState %>
                          </div>
                          <form class="form-horizontal" method="post">
                               <div class="form-group">
