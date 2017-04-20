@@ -1,6 +1,12 @@
+var commons = require('../config/common');
+var menus = require('../config/menu');
+var basic = require('../config/basic');
 var config = require('../config/secret.js');
 var express = require('express');
+
 var router = express.Router();
+var common = commons();
+
 
 /*********************************************
  * MySQL
@@ -31,11 +37,25 @@ router.get(['/:bid', '/:bid/list'], function(req, res, next) {
                connection.release();
           });
      });*/
-     res.render(req.params.bid);
+     var loginstate = common.getUserState(req);
+     common.activeMenu(menus, req.params.bid);
+     res.render(req.params.bid, {
+          title: basic.HOMEPAGE_TITLE,
+          bUrl: basic.HOMEPAGE_URL,
+          menudata: menus,
+          loginState: loginstate
+     });
 });
 /* GET Board - Write */
 router.get('/:bid/write', function(req, res, next) {
-     res.render('_write');
+     var loginstate = common.getUserState(req);
+     common.activeMenu(menus, req.params.bid);
+     res.render('_write', {
+          title: basic.HOMEPAGE_TITLE,
+          bUrl: basic.HOMEPAGE_URL,
+          menudata: menus,
+          loginState: loginstate
+     });
 });
 
 module.exports = router;

@@ -7,25 +7,25 @@
                               <span class="icon-bar"></span>
                               <span class="icon-bar"></span>
                          </button>
-                         <a class="navbar-brand" href="#"><%= title %></a>
+                         <a class="navbar-brand" href="/index"><%= title %></a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                          <ul class="nav navbar-nav"><% for (var m = 0; m < menudata.items.length; m++) { %><% if (!menudata.items[m].isSubmenu) { %>
-                              <li class="<%= menudata.items[m].selected %>"><a href="<%= menudata.items[m].href %>"><%= menudata.items[m].value %></a></li><% } else { %><% if (menudata.items[m].parentMenu == "") { %>
+                              <li class="<%= menudata.items[m].selected %>"><a href="<%= bUrl %><%= menudata.items[m].href %>"><%= menudata.items[m].value %></a></li><% } else { %><% if (menudata.items[m].parentMenu == "") { %>
                               <li class="dropdown">
-                                   <a href="<%= menudata.items[m].href %>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= menudata.items[m].value %> <span class="caret"></span></a>
+                                   <a href="<%= bUrl %><%= menudata.items[m].href %>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= menudata.items[m].value %> <span class="caret"></span></a>
                                    <ul class="dropdown-menu"><% } else if (menudata.items[m].parentMenu != "ENDSUB") { %>
-                                        <li class="<%= menudata.items[m].selected %>"><a href="<%= menudata.items[m].href %>"><%= menudata.items[m].value %></a></li><% } else { %>
+                                        <li class="<%= menudata.items[m].selected %>"><a href="<%= bUrl %><%= menudata.items[m].href %>"><%= menudata.items[m].value %></a></li><% } else { %>
                                    </ul>
                               </li><% } %><% } %><% } %>
                          </ul>
 
-                         <ul class="nav navbar-nav navbar-right">
+                         <ul class="nav navbar-nav navbar-right"><% if (loginState) { %>
                               <li class="">
                                    <a href="/mypage"><span class="glyphicon glyphicon-user"></span>내 정보</a>
-                              </li>
+                              </li><% } %>
                               <li class=""><% if (!loginState) { %>
-                                   <a href="/auth/login/naver"><span class="glyphicon glyphicon-off"></span>로그인</a><% } else { %>
+                                   <a href="/auth/login/naver" data-toggle="modal" data-target="#signin"><span class="glyphicon glyphicon-off"></span>로그인</a><% } else { %>
                                    <a href="/logout"><span class="glyphicon glyphicon-off"></span>로그아웃</a><% } %>
                               </li>
                          </ul>
@@ -35,3 +35,20 @@
                     </div>
                </div>
           </nav>
+
+          <div class="modal fade" id="signin" tabindex="-1" role="dialog" aria-labelledby="signinLabel">
+               <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                         <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" id="signin">로그인</h4>
+                         </div>
+                         <div class="modal-body signin">
+                              <ul>
+                                   <li><a class="btn btn-success" href="/auth/login/naver">네이버로 로그인</a></li>
+                                   <li><a class="btn btn-primary" href="/auth/login/facebook">페이스북으로 로그인</a></li>
+                              </ul>
+                         </div>
+                    </div>
+               </div>
+          </div>
