@@ -23,12 +23,8 @@
           <div class="container">
                <div class="row">
                     <div class="col-sm-2">
-                         <ul class="nav nav-pills nav-stacked">
-                              <li role="presentation" class="active"><a href="">전체</a></li>
-                              <li role="presentation"><a href="">바이올린</a></li>
-                              <li role="presentation"><a href="">피아노</a></li>
-                              <li role="presentation"><a href="">기타</a></li>
-                              <li role="presentation"><a href="">드럼</a></li>
+                         <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %>
+                              <li role="presentation"><a href=""><%= boardCategory[i].name %></a></li><% } %>
                          </ul>
                     </div>
                     <div class="col-sm-10">
@@ -50,11 +46,8 @@
                               <li role="presentation" class="dropdown">
                                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">카테고리 <span class="caret"></span></a>
                               </li>
-                              <ul class="dropdown-menu">
-                                   <li>바이올린</li>
-                                   <li>피아노</li>
-                                   <li>기타</li>
-                                   <li>드럼</li>
+                              <ul class="dropdown-menu"><% for (var i = 0; i < boardCategory.length; i++) { %>
+                                   <li id="playboard-catelist-<%= boardCategory[i].id %>"><%= boardCategory[i].name %></li><% } %>
                               </ul>
                          </ul>
                          <table class="table table-hover board-play">
@@ -69,7 +62,16 @@
                                         <th>조회수</th>
                                    </tr>
                               </thead>
-                              <tbody>
+                              <tbody><% for (var i = 0; i < boardData.length; i++) { %>
+                                   <tr>
+                                        <td><input type="checkbox" id="playboard-<%= boardData[i].id %>"></td>
+                                        <td><%= boardData[i].id %></td>
+                                        <td><%= boardData[i].name %></td>
+                                        <td><%= boardData[i].title %></td>
+                                        <td><%= boardData[i].user %></td>
+                                        <td><%= boardData[i].adate %></td>
+                                        <td><%= boardData[i].view %></td>
+                                   </tr><% } %>
                                    <tr>
                                         <td><input type="checkbox"></td>
                                         <td>5</td>
