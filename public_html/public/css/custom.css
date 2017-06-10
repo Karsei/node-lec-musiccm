@@ -130,8 +130,10 @@ table > thead > tr > th {
 }
 .play-article {
      position: relative;
-     padding: 10px;
+     padding: 20px;
+     min-height: 320px;
      margin-bottom: 10px;
+     border: 5px solid #fff;
      background-color: #eee;
      transition: background-color 0.5s;
 }

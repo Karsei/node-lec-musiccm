@@ -9,6 +9,69 @@ var striptags = require('striptags');
 var router = express.Router();
 var common = commons();
 
+/*********************************************
+ * Youtube
+**********************************************/
+var google = require('googleapis');
+//var youtube = google.youtube({ version: 'v3', auth: config.google.api_key });
+var youtube = google.youtube('v3');
+
+var YoutubeData = function (obj) {};
+YoutubeData.prototype = {
+     /*****************************************************
+      * [Youtube 특정 동영상의 정보를 가져옴]
+      * @param callback            작업이 끝난 후 콜백 함수
+      * @param param               필요 파라메터
+      * core error 관련 ::
+      https://developers.google.com/youtube/v3/docs/core_errors
+     ******************************************************/
+     getVideosList : function (callback, param) {
+          try {
+               /*
+               [PART]
+               id,snippet,contentDetails,fileDetails, liveStreamingDetails, player, processingDetails,recordingDetails,statistics,status,suggestions,topicDetails
+               */
+               var p_part = param.part;
+               var p_id = param.id;
+               if (p_part && p_id) {
+                    youtube.videos.list({
+                         part: p_part,
+                         id: p_id
+                    }, function(err, data) {
+                         if (err) {
+                              callback(err);
+                              console.error(err);
+                         }
+                         if (data) {
+                              callback(data);
+                         }
+                    });
+               } else {
+                    callback({
+                         part: "Youtube Video List",
+                         error: "Need parameter. Check server console and board.js."
+                    });
+               }
+          } catch (e) {
+               console.error(e);
+          }
+     },
+     /*****************************************************
+      * [Youtube 영상 주소의 고유 ID 추출]
+      * @param url                 Youtube 영상 주소
+      * @return Youtube 영상의 고유 ID
+     ******************************************************/
+     getVideoId: function (url) {
+          var vid = url.split('v=')[1]
+            , ampPos = vid.indexOf('&');
+          if (ampPos != -1) {
+               vid = vid.substring(0, ampPos);
+          }
+          return vid;
+     }
+};
+var YoutubeAPI = new YoutubeData();
+
 
 /*********************************************
  * MySQL
@@ -270,30 +333,49 @@ router.post('/:bid/writeok', function(req, res, next) {
      sqlPool.getConnection(function (err, connection) {
           var q;
 
-          if (cateid != "") {
-               console.log("게시판: " + brdid + ", 카테고리 있음 - " + cateid);
-               switch (req.params.bid) {
-                    case "sheet":
-                         q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`, `category`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + req.body.writeInpContent + "', '" + req.body.writeInpCate + "');";
-                    break;
-                    case "play":
-                         q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `youtubeurl`, `content`, `category`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + req.body.writeYoutubeURL + "', '" + req.body.writeInpContent + "', '" + req.body.writeInpCate + "');";
-                    break;
-               }
-          } else {
-               console.log("게시판: " + brdid + ", 카테고리 없음 - " + cateid);
-               q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + req.body.writeInpContent + "');";
+          switch (req.params.bid) {
+               case "play":
+                    // Youtube 영상의 썸네일 구하기
+                    if (req.body.writeYoutubeURL != undefined || req.body.writeYoutubeURL != "") {
+                         var setParam = {
+                              part: "id,snippet",
+                              id: YoutubeAPI.getVideoId(req.body.writeYoutubeURL)
+                         };
+                         YoutubeAPI.getVideosList(function (data) {
+                              q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `youtubeid`, `youtubethum`, `content`, `category`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + YoutubeAPI.getVideoId(req.body.writeYoutubeURL) + "', '" + data.items[0].snippet.thumbnails.default.url + "', '" + req.body.writeInpContent + "', '" + req.body.writeInpCate + "');";
+                              connection.query(q, function (cgerr, cgrows) {
+                                   if (cgerr)  console.error("Error: " + cgerr);
+                                   // 연결 해제
+                                   connection.release();
+                                   // 원래 목록으로 되돌아감
+                                   res.redirect('/board/' + req.params.bid + '/list/1');
+                              });
+                         }, setParam);
+                    }
+               break;
+               case "sheet":
+                    q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`, `category`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + req.body.writeInpContent + "', '" + req.body.writeInpCate + "');";
+                    connection.query(q, function (cgerr, cgrows) {
+                         if (cgerr)  console.error("Error: " + cgerr);
+
+                         // 연결 해제
+                         connection.release();
+                         // 원래 목록으로 되돌아감
+                         res.redirect('/board/' + req.params.bid + '/list/1');
+                    });
+               break;
+               case "mentor":
+                    q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + req.body.writeInpContent + "');";
+                    connection.query(q, function (cgerr, cgrows) {
+                         if (cgerr)  console.error("Error: " + cgerr);
+
+                         // 연결 해제
+                         connection.release();
+                         // 원래 목록으로 되돌아감
+                         res.redirect('/board/' + req.params.bid + '/list/1');
+                    });
+               break;
           }
-          connection.query(q, function (cgerr, cgrows) {
-               if (cgerr)  console.error("Error: " + cgerr);
-               //console.log("(Board Write) rows: " + JSON.stringify(cgrows));
-
-               // 연결 해제
-               connection.release();
-
-               // 원래 목록으로 되돌아감
-               res.redirect('/board/' + req.params.bid + '/list/1');
-          });
      });
 });
 
@@ -385,13 +467,154 @@ router.get('/:bid/view/:number', function(req, res, next) {
      });
 });
 
+/* GET Board - Modify */
+router.get('/:bid/modify/:number', function(req, res, next) {
+     // 데이터베이스 id 가져오기
+     var cateid = getCategoryId(req.params.bid)
+       , brdid = getBoardId(req.params.bid);
+
+     sqlPool.getConnection(function (err, connection) {
+          var board_category;
+
+          // 카테고리 내용 받아오기
+          if (cateid != "") {
+               q = "SELECT * FROM " + cateid;
+               connection.query(q, function (cgerr, cgrows) {
+                    if (cgerr)  console.error("Error: " + cgerr);
+                    //console.log("(Board Category) rows: " + JSON.stringify(cgrows));
+
+                    board_category = cgrows;
+
+                    // 게시판 목록 가져오기
+                    q = "SELECT " + getSelectQuery(req.params.bid) + " " +
+                        "FROM " + brdid + " AS BOARD, " + cateid + " AS CATE, mc_users AS USERLIST " +
+                        "WHERE (BOARD.category = CATE.id) " +
+                        "AND (USERLIST.id = BOARD.user) " +
+                        "AND BOARD.id = '" + req.params.number + "';";
+                    connection.query(q, function (bderr, bdrows) {
+                         if (bderr)  console.error("Error: " + bderr);
+                         //console.log("(Board Data) rows: " + JSON.stringify(bdrows));
+
+                         board_data = bdrows;
+
+                         // 로그인 상태 파악 후 메뉴 구성
+                         var loginstate = common.getUserState(req);
+                         common.activeMenu(menus, req.params.bid);
+
+                         // 페이지 출력
+                         res.render('_modify', {
+                              title: basic.HOMEPAGE_TITLE,
+                              bUrl: basic.HOMEPAGE_URL,
+                              menudata: menus,
+                              loginState: loginstate,
+                              bid: req.params.bid,
+                              boardData: board_data,
+                              boardCategory: board_category,
+                              striptags: striptags
+                         });
+
+                         // 연결 해제
+                         connection.release();
+                    });
+               });
+          } else {
+               // 게시판 목록 가져오기
+               q = "SELECT " + getSelectQuery(req.params.bid) + " " +
+                   "FROM " + brdid + " AS BOARD, mc_users AS USERLIST " +
+                   "WHERE (USERLIST.id = BOARD.user) AND (BOARD.id = '" + req.params.number + "');";
+               connection.query(q, function (bderr, bdrows) {
+                    if (bderr)  console.error("Error: " + bderr);
+                    //console.log("(Board Data) rows: " + JSON.stringify(bdrows));
+
+                    board_data = bdrows;
+
+                    // 로그인 상태 파악 후 메뉴 구성
+                    var loginstate = common.getUserState(req);
+                    common.activeMenu(menus, req.params.bid);
+
+                    // 페이지 출력
+                    res.render('_modify', {
+                         title: basic.HOMEPAGE_TITLE,
+                         bUrl: basic.HOMEPAGE_URL,
+                         menudata: menus,
+                         loginState: loginstate,
+                         boardInfo: binforows[0],
+                         boardData: board_data,
+                         striptags: striptags
+                    });
+
+                    // 연결 해제
+                    connection.release();
+               });
+          }
+     });
+});
+/* POST Board - Modify OK */
+router.post('/:bid/modifyok/:number', function(req, res, next) {
+     // 데이터베이스 id 가져오기
+     var cateid = getCategoryId(req.params.bid)
+       , brdid = getBoardId(req.params.bid);
+
+     // 게시판에 삽입
+     sqlPool.getConnection(function (err, connection) {
+          var q;
+
+          switch (req.params.bid) {
+               case "play":
+                    // Youtube 영상의 썸네일 구하기
+                    if (req.body.modifyYoutubeURL != undefined || req.body.modifyYoutubeURL != "") {
+                         var setParam = {
+                              part: "id,snippet",
+                              id: YoutubeAPI.getVideoId(req.body.modifyYoutubeURL)
+                         };
+                         YoutubeAPI.getVideosList(function (data) {
+                              q = "UPDATE musiccm." + brdid + " SET `title`='" + req.body.modifyInpTitle + "', `youtubeid`='" + YoutubeAPI.getVideoId(req.body.modifyYoutubeURL) + "', `youtubethum`='" + data.items[0].snippet.thumbnails.default.url + "', `content`='" + req.body.modifyInpContent + "', `category`='"+ req.body.writeInpCate + "' " +
+                                  "WHERE `id`='" + req.params.number + "';";
+                              connection.query(q, function (mderr, mdrows) {
+                                   if (mderr)  console.error("Error: " + mderr);
+                                   // 연결 해제
+                                   connection.release();
+                                   // 작성한 글로 되돌아감
+                                   res.redirect('/board/' + req.body.modifyInpBid + '/view/' + req.params.number);
+                              });
+                         }, setParam);
+                    }
+               break;
+               case "sheet":
+                    q = "UPDATE musiccm." + brdid + " SET `title`='" + req.body.modifyInpTitle + "', `content`='" + req.body.modifyInpContent + "', `category`='"+ req.body.writeInpCate + "' " +
+                        "WHERE `id`='" + req.params.number + "';";
+                    connection.query(q, function (mderr, mdrows) {
+                         if (mderr)  console.error("Error: " + mderr);
+
+                         // 연결 해제
+                         connection.release();
+                         // 작성한 글로 되돌아감
+                         res.redirect('/board/' + req.body.modifyInpBid + '/view/' + req.params.number);
+                    });
+               break;
+               case "mentor":
+                    q = "UPDATE musiccm." + brdid + " SET `title`='" + req.body.modifyInpTitle + "', `content`='" + req.body.modifyInpContent + "'" +
+                        "WHERE `id`='" + req.params.number + "';";
+                    connection.query(q, function (mderr, mdrows) {
+                         if (mderr)  console.error("Error: " + mderr);
+
+                         // 연결 해제
+                         connection.release();
+                         // 작성한 글로 되돌아감
+                         res.redirect('/board/' + req.body.modifyInpBid + '/view/' + req.params.number);
+                    });
+               break;
+          }
+     });
+});
+
 function getSelectQuery(bid) {
      switch (bid) {
           case "sheet":
                return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, BOARD.like AS a_like, BOARD.heart AS a_heart, BOARD.category AS a_category, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname, CATE.name AS c_name";
           break;
           case "play":
-               return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, BOARD.category AS a_category, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname, CATE.name AS c_name";
+               return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, BOARD.category AS a_category, BOARD.youtubeid AS a_youtubeid, BOARD.youtubethum AS a_youtubethum, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname, CATE.name AS c_name";
           default:
                return "*";
           break;

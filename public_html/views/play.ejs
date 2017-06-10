@@ -103,10 +103,10 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                               <a href="/board/play/view/<%= boardData[i].a_id %>">
                                    <div class="col-sm-4 play-article">
                                         <p class="play-id"><%= boardData[i].a_id %></p>
-                                        <p class="play-img text-center"><img src="http://placehold.it/120x96" class="img-thumbnail" alt=""></p>
+                                        <p class="play-img text-center"><img src="<%= boardData[i].a_youtubethum %>" class="img-thumbnail" alt=""></p>
                                         <h4 class="play-title"><%= boardData[i].a_title %> <small><label class="label label-info"><%= boardData[i].c_name %></label></small></h4>
                                         <p class="play-nickname"><%= boardData[i].u_nickname %><br><span class="play-date"><%= (new Date(boardData[i].a_date)).format("yyyy/MM/dd HH:mm:ss") %></span></p>
-                                        <p class="play-content"><%- _trimDotString(striptags(boardData[i].a_content), 100) %></p>
+                                        <p class="play-content"><%- _trimDotString(striptags(boardData[i].a_content), 50) %></p>
                                    </div><% } %>
                               </a>
                          </div>

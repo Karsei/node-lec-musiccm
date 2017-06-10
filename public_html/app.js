@@ -13,6 +13,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var NaverStrategy = require('passport-naver').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
+// Google
+var google = require('googleapis');
+
 // MySQL
 var mysql = require('mysql');
 
@@ -21,6 +24,14 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var board = require('./routes/board');
 var service = require('./routes/service');
+
+/*********************************************
+ * Google APIs
+ * https://github.com/google/google-api-nodejs-client
+**********************************************/
+google.options({
+     auth: config.google.api_key
+});
 
 /*********************************************
  * MySQL Connection

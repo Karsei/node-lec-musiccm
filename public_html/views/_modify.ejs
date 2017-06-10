@@ -38,6 +38,9 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>Music Community</title>
 
+          <!-- ckeditor -->
+          <script type="text/javascript" src="../../../ckeditor/ckeditor.js"></script>
+
           <!-- Bootstrap CSS -->
           <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
 
@@ -94,74 +97,70 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
           <div class="container">
                <div class="row">
-                    <h2 style="border-left: 5px solid <%= boardInfo.color %>; padding-left: 5px;"><%= boardInfo.name %></h2>
-                    <p><%= boardInfo.desc %></p>
-                    <hr>
-
-                    <div class="col-sm-2">
-                         <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %>
-                              <li role="presentation"><a href="/board/<%= bid %>/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } %>
-                         </ul>
-                    </div>
-
-                    <div class="col-sm-10">
-                         <form class="form-horizontal view-article">
-                              <div class="form-group">
-                                   <label class="col-sm-2 control-label">작성자</label>
-                                   <div class="col-sm-10">
-                                        <p class="view-head"><%= boardData[0].u_nickname %></p>
-                                   </div>
-                              </div>
-                              <div class="form-group">
-                                   <label class="col-sm-2 control-label">작성일</label>
-                                   <div class="col-sm-10">
-                                        <p class="view-head"><%= (new Date(boardData[0].a_date)).format("yyyy/MM/dd HH:mm:ss") %></p>
-                                   </div>
-                              </div>
-
+                    <form class="form-horizontal" action="/board/<%= bid %>/modifyok/<%= boardData[0].a_id %>" method="post">
 <% if (bid == "sheet" || bid == "play") { %>
-                              <div class="form-group">
-                                   <label class="col-sm-2 control-label">카테고리</label>
-                                   <div class="col-sm-10">
-                                        <p class="view-head"><%= boardData[0].c_name %></p>
-                                   </div>
-                              </div>
-<% } %>
-                              <div class="form-group">
-                                   <label class="col-sm-2 control-label">제목</label>
-                                   <div class="col-sm-10">
-                                        <p class="view-head"><%= boardData[0].a_title %></p>
-                                   </div>
-                              </div>
-<% if (bid == "play") { %>
-                              <div class="form-group">
-                                   <label class="col-sm-2 control-label">영상</label>
-                                   <div class="col-sm-10">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= boardData[0].a_youtubeid %>" frameborder="0" allowfullscreen></iframe>
-                                   </div>
-                              </div>
-<% } %>
-                              <div class="form-group">
-                                   <label class="col-sm-2 control-label">내용</label>
-                                   <div class="col-sm-10">
-                                        <div class="view-content">
-                                             <%- boardData[0].a_content %>
-                                        </div>
-                                   </div>
-                              </div>
-                         </form>
-
-                         <div class="view-bottom">
-                              <a class="btn btn-default" href="/board/<%= bid %>/list" role="button">목록</a>
-                              <div class="view-bottom-right">
-                                   <a class="btn btn-danger" href="/board/<%= bid %>/delete/<%= boardData[0].a_id %>" role="button">삭제</a>
-                                   <a class="btn btn-primary" href="/board/<%= bid %>/modify/<%= boardData[0].a_id %>" role="button">수정</a>
+                         <div class="form-group">
+                              <label class="col-sm-2 control-label">카테고리</label>
+                              <div class="col-sm-10">
+                                   <select class="form-control" id="writeInpCate" name="writeInpCate"><% for (var i = 0; i < boardCategory.length; i++) { %><% if (boardCategory[i].name == boardData[0].c_name) { %>
+                                        <option value="<%= boardCategory[i].id %>" selected><%= boardCategory[i].name %></option><% } else { %>
+                                        <option value="<%= boardCategory[i].id %>"><%= boardCategory[i].name %></option><% } %><% } %>
+                                   </select>
                               </div>
                          </div>
-                    </div>
+<% } %>
+                         <div class="form-group">
+                              <label for="modifyInpTitle" class="col-sm-2 control-label">제목</label>
+                              <div class="col-sm-10">
+                                   <input id="modifyInpTitle" name="modifyInpTitle" type="text" class="form-control" value="<%= boardData[0].a_title %>" placeholder="제목을 입력하세요." required />
+                              </div>
+                         </div>
+<% if (bid == "play") { %>
+                         <div class="form-group">
+                              <label for="modifyYoutubeURL" class="col-sm-2 control-label">Youtube 영상 주소</label>
+                              <div class="col-sm-10">
+                                   <input id="modifyYoutubeURL" name="modifyYoutubeURL" type="text" class="form-control" value="https://www.youtube.com/watch?v=<%= boardData[0].a_youtubeid %>" placeholder="Youtube 영상 주소를 입력하세요. (예: https://www.youtube.com/watch?v=cwHgJudJ_Rc)" />
+                              </div>
+                         </div>
+<% } %>
+                         <div class="form-group">
+                              <label for="modifyInpContent" class="col-sm-2 control-label">내용</label>
+                              <div class="col-sm-10">
+                                   <div class="view-content">
+                                        <textarea name="modifyInpContent" id="modifyInpContent" rows="10" cols="100" style="width:766px; height:412px; display:none;"><%- boardData[0].a_content %></textarea>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="form-group">
+                              <div class="col-sm-offset-2 col-sm-10">
+                                   <input type="hidden" id="modifyInpBid" name="modifyInpBid" value="<%= bid %>" />
+                                   <input type="button" class="btn btn-default" onclick="submitContents(this);" value="수정" />
+                              </div>
+                         </div>
+                    </form>
                </div>
           </div>
 
+          <!-- ckeditor -->
+          <script type="text/javascript">
+               CKEDITOR.replace("modifyInpContent", {
+                    filebrowserUploadUrl: '/service/upload'
+                    //filebrowserImageUploadUrl: '/uploads'
+               });
+
+               function submitContents(elClickedObj) {
+                    var editor = CKEDITOR.instances.modifyInpContent
+                      , editor_Data = editor.getData();
+                    if (editor_Data.length < 1) {
+                         alert("내용을 입력해주세요!");
+                         return;
+                    }
+
+                    try {
+                         elClickedObj.form.submit();
+                    } catch (e) {}
+               }
+          </script>
           <!-- jQuery -->
           <script src="//code.jquery.com/jquery.js"></script>
           <!-- Bootstrap JavaScript -->

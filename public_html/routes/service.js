@@ -5,7 +5,7 @@ var router = express.Router();
 
 var uploadSetting = multer({ dest: "/home/karsei/musiccm/public_html/uploads" });
 
-/* POST upload */
+/* POST upload - ckeditor */
 router.post('/upload', uploadSetting.single('upload'), function(req, res) {
      try {
           var tmpPath = req.file.path;

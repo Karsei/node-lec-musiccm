@@ -28,5 +28,8 @@ module.exports = {
           'user': 'musiccm',
           'database': 'musiccm',
           'password': 'musiccmpass'
+     },
+     'google': {
+          'api_key': 'AIzaSyD8kIb9Qp-b4y-oahMl3Ik-7QPIlkTT6J4'
      }
 }
