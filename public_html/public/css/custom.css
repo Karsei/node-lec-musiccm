@@ -22,6 +22,22 @@ table > thead > tr > th {
      text-align: center;
 }
 
+.btn-width200 {
+     width: 200px;
+}
+.btn-width100 {
+     width: 100px;
+}
+.fill-lemon {
+     border: 0;
+     background-color: rgb(241, 196, 15);
+}
+.fill-gray {
+     border: 0;
+     color: white;
+     background-color: rgb(94, 94, 94);
+}
+
 /****************************************
  * [RESPONSIVE]
 ****************************************/
@@ -72,18 +88,21 @@ table > thead > tr > th {
 
 /*****************************************************
  *
- * [Home]
+ * [Mentor Board]
  *
 ******************************************************/
-.board-bottom {
+.mentor-bottom {
      position: relative;
 }
-.board-bottom .board-bottom-right {
+.mentor-bottom .mentor-bottom-right {
      position: absolute;
      top: 0px;
      right: 0px;
 }
-.board-bottom .board-pagination {
+.mentor-bottom .mentor-search {
+     text-align: center;
+}
+.mentor-bottom .mentor-pagination {
      text-align: center;
 }
 
@@ -92,7 +111,57 @@ table > thead > tr > th {
  * [Play Board]
  *
 ******************************************************/
+.play-bottom {
+     position: relative;
+}
+.play-bottom .play-bottom-right {
+     position: absolute;
+     top: 0px;
+     right: 0px;
+}
+.play-bottom .play-search {
+     text-align: center;
+}
+.play-bottom .play-pagination {
+     text-align: center;
+}
+
 /*.board-play > tbody > tr > td:nth-child(1),*/
 .board-play > tbody > tr > td:not(:nth-child(4)) {
+     text-align: center;
+}
+
+
+/*****************************************************
+ *
+ * [Sheet Board]
+ *
+******************************************************/
+.sheet-article {
+     position: relative;
+     padding: 10px;
+     margin-bottom: 10px;
+     background-color: #eee;
+}
+.sheet-article .sheet-id {
+     vertical-align: middle;
+}
+.sheet-article .sheet-info {
+     padding-top: 10px;
+}
+.sheet-article .glyphicon {
+     margin-right: 10px;
+}
+
+.sheet-bottom {
+     position: relative;
+}
+.sheet-bottom .sheet-bottom-right {
+     position: absolute;
+     top: 0px;
+     right: 0px;
+}
+
+.sheet-list .sheet-pagination {
      text-align: center;
 }

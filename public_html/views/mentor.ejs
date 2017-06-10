@@ -22,124 +22,70 @@
 <% include _menu %>
           <div class="container">
                <div class="row">
-                    <div class="col-sm-2">
-                         <ul class="nav nav-pills nav-stacked">
-                              <li role="presentation" class="active"><a href="">전체</a></li>
-                              <li role="presentation"><a href="">일반</a></li>
-                              <li role="presentation"><a href="">질문</a></li>
-                         </ul>
-                    </div>
-                    <div class="col-sm-10">
-                         <h2 style="border-left: 5px solid skyblue; padding-left: 5px;">멘토 게시판</h2>
-                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                         <hr>
-                         <div class="well">
-                              <h2>인기 게시물</h2>
-                              <ul>
-                                   <li>1</li>
-                                   <li>2</li>
-                                   <li>3</li>
-                                   <li>4</li>
-                                   <li>5</li>
-                              </ul>
-                         </div>
-                         <hr>
-                         <ul class="nav nav-pills">
-                              <li role="presentation" class="dropdown">
-                                   <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">카테고리 <span class="caret"></span></a>
-                              </li>
-                              <ul class="dropdown-menu">
-                                   <li>바이올린</li>
-                                   <li>피아노</li>
-                                   <li>기타</li>
-                                   <li>드럼</li>
-                              </ul>
-                         </ul>
-                         <table class="table table-hover board-play">
-                              <thead>
-                                   <tr>
-                                        <th>#</th>
-                                        <th>번호</th>
-                                        <th>카테고리</th>
-                                        <th>제목</th>
-                                        <th>작성자</th>
-                                        <th>날짜</th>
-                                        <th>조회수</th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-                                   <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>5</td>
-                                        <td>일반</td>
-                                        <td>이것이 제목</td>
-                                        <td>싱어</td>
-                                        <td>2017/04/14</td>
-                                        <td>54</td>
-                                   </tr>
-                                   <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>4</td>
-                                        <td>일반</td>
-                                        <td>This is a title</td>
-                                        <td>호랑이</td>
-                                        <td>2017/04/14</td>
-                                        <td>9</td>
-                                   </tr>
-                                   <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>3</td>
-                                        <td>일반</td>
-                                        <td>1237584951312</td>
-                                        <td>홍길동</td>
-                                        <td>2017/04/14</td>
-                                        <td>102</td>
-                                   </tr>
-                                   <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>2</td>
-                                        <td>일반</td>
-                                        <td>가나다라마바</td>
-                                        <td>가디</td>
-                                        <td>2017/04/12</td>
-                                        <td>25</td>
-                                   </tr>
-                                   <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>1</td>
-                                        <td>질문</td>
-                                        <td>가나다라마바사아자차카타파하</td>
-                                        <td>ABCDE</td>
-                                        <td>2017/03/10</td>
-                                        <td>894</td>
-                                   </tr>
-                              </tbody>
-                         </table>
+                    <h2 style="border-left: 5px solid skyblue; padding-left: 5px;">멘토 게시판</h2>
+                    <p>궁금하거나 더 알고 싶은 것들을 다른 사람에게 물어보세요!</p>
 
-                         <div class="board-bottom">
-                              <a class="btn btn-default" href="/board/play/list" role="button">목록</a>
-                              <div class="board-bottom-right">
-                                   <a class="btn btn-primary" href="/board/play/write" role="button">글쓰기</a>
+                    <hr>
+
+                    <div class="mentor-article">
+
+                         <div class="row mentor-question">
+                              <div class="col-sm-8">
+                                   <div class="media">
+                                        <div class="media-left">
+                                             <img class="img-circle" src="http://placehold.it/120x96" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                             <p>클래식 기타 관리하는 법좀 알려주세요! <button type="button" class="btn btn-primary" name="button">댓글</button></p>
+                                        </div>
+                                   </div>
                               </div>
-                              <div class="board-pagination">
-                                   <nav aria-label="Page navigation">
-                                        <ul class="pagination">
-                                             <li>
-                                                  <a href="#" aria-label="Previous">
-                                                       <span aria-hidden="true">&laquo;</span>
-                                                  </a>
-                                             </li>
-                                             <li class="active"><a href="#">1</a></li>
-                                             <li class="disabled"><a href="#">2</a></li>
-                                             <li class="disabled"><a href="#">3</a></li>
-                                             <li>
-                                                  <a href="#" aria-label="Next">
-                                                       <span aria-hidden="true">&raquo;</span>
-                                                  </a>
-                                             </li>
-                                        </ul>
-                                   </nav>
+                              <div class="col-sm-4"></div>
+                         </div>
+
+                         <div class="row mentor-answer">
+                              <div class="col-sm-offset-4 col-sm-8">
+                                   <div class="media">
+                                        <div class="media-body">
+                                             <p>클래식 기타 관리는... <button type="button" class="btn btn-primary" name="button">댓글</button></p>
+                                             <input type="text" name="" value=""><button type="button" class="btn btn-default" name="button">등록</button>
+                                        </div>
+                                        <div class="media-right">
+                                             <img class="img-circle" src="http://placehold.it/120x96" alt="">
+                                        </div>
+                                   </div>
                               </div>
+                         </div>
+                    </div>
+
+                    <div class="mentor-bottom">
+                         <a class="btn btn-default" href="/board/mentor/list" role="button">목록</a>
+                         <div class="mentor-bottom-right">
+                              <a class="btn btn-primary" href="/board/mentor/write" role="button">글쓰기</a>
+                         </div>
+
+                         <div class="mentor-search">
+                              <input type="text" id="inp_mentorSearch" name="inp_mentorSearch" value="">
+                              <button type="button" class="btn btn-default" name="button">검색</button>
+                         </div>
+                         <div class="mentor-pagination">
+                              <nav aria-label="Page navigation">
+                                   <ul class="pagination">
+                                        <li>
+                                             <a href="#" aria-label="Previous">
+                                                  <span aria-hidden="true">&laquo;</span>
+                                             </a>
+                                        </li>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li class="disabled"><a href="#">2</a></li>
+                                        <li class="disabled"><a href="#">3</a></li>
+                                        <li>
+                                             <a href="#" aria-label="Next">
+                                                  <span aria-hidden="true">&raquo;</span>
+                                             </a>
+                                        </li>
+                                   </ul>
+                              </nav>
                          </div>
                     </div>
                </div>
