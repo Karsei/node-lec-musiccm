@@ -6,8 +6,8 @@
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>Music Community</title>
 
-          <!-- SmartEditor2 -->
-          <script type="text/javascript" src="../../smarteditor/js/service/HuskyEZCreator.js" charset="utf-8"></script>
+          <!-- ckeditor -->
+          <script type="text/javascript" src="../../ckeditor/ckeditor.js"></script>
 
           <!-- Bootstrap CSS -->
           <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
@@ -22,6 +22,12 @@
      </head>
 
      <body>
+<% if (!loginState) { %>
+          <script type="text/javascript">
+               alert("로그인을 하셔야 합니다!");
+               history.back();
+          </script>
+<% } %>
 <% include _menu %>
           <!--nav class="navbar navbar-default navbar-fixed-top">
                <div class="container">
@@ -65,34 +71,40 @@
 
           <div class="container">
                <div class="row">
-                    <form class="form-horizontal" action="/board/play/write/writeok" method="post">
+                    <form class="form-horizontal" action="/board/<%= bid %>/writeok" method="post">
 <% if (bid == "sheet" || bid == "play") { %>
                          <div class="form-group">
-                              <label for="inputCategory" class="col-sm-2 control-label">카테고리</label>
+                              <label for="writeInpCate" class="col-sm-2 control-label">카테고리</label>
                               <div class="col-sm-10">
                                    <select class="form-control" id="writeInpCate" name="writeInpCate"><% for (var i = 0; i < boardCategory.length; i++) { %>
-                                        <option value="<%= boardCategory[i].identify %>"><%= boardCategory[i].name %></option><% } %>
+                                        <option value="<%= boardCategory[i].id %>"><%= boardCategory[i].name %></option><% } %>
                                    </select>
                               </div>
                          </div>
 <% } %>
                          <div class="form-group">
-                              <label for="inputTitle" class="col-sm-2 control-label">제목</label>
+                              <label for="writeInpTitle" class="col-sm-2 control-label">제목</label>
                               <div class="col-sm-10">
-                                   <input id="writeInpTitle" name="writeInpTitle" type="text" class="form-control" placeholder="제목을 입력하세요." required>
+                                   <input id="writeInpTitle" name="writeInpTitle" type="text" class="form-control" placeholder="제목을 입력하세요." required />
                               </div>
                          </div>
+<% if (bid == "play") { %>
                          <div class="form-group">
-                              <label for="inputTitle" class="col-sm-2 control-label">내용</label>
+                              <label for="writeYoutubeURL" class="col-sm-2 control-label">Youtube 영상 주소</label>
                               <div class="col-sm-10">
-                                   <form action="/_write/writeok" method="post">
-                                        <textarea name="writeInpContent" id="writeInpContent" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea>
-                                   </form>
+                                   <input id="writeYoutubeURL" name="writeYoutubeURL" type="text" class="form-control" placeholder="Youtube 영상 주소를 입력하세요. (예: https://www.youtube.com/watch?v=cwHgJudJ_Rc)" />
+                              </div>
+                         </div>
+<% } %>
+                         <div class="form-group">
+                              <label for="writeInpContent" class="col-sm-2 control-label">내용</label>
+                              <div class="col-sm-10">
+                                   <textarea name="writeInpContent" id="writeInpContent" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea>
                               </div>
                          </div>
                          <div class="form-group">
                               <div class="col-sm-offset-2 col-sm-10">
-                                   <input type="hidden" id="writeInpBid" name="writeInpBid" value="<%= bid %>">
+                                   <input type="hidden" id="writeInpBid" name="writeInpBid" value="<%= bid %>" />
                                    <input type="button" class="btn btn-default" onclick="submitContents(this);" value="작성" />
                               </div>
                          </div>
@@ -100,45 +112,26 @@
                </div>
           </div>
 
-          <!-- SmartEdtior Load -->
+          <!-- ckeditor -->
           <script type="text/javascript">
-          var oEditors = {};
-          var sLang = "ko_KR";	// 언어 (ko_KR/ en_US/ ja_JP/ zh_CN/ zh_TW), default = ko_KR
+               CKEDITOR.replace("writeInpContent", {
+                    filebrowserUploadUrl: '/service/upload'
+                    //filebrowserImageUploadUrl: '/uploads'
+               });
 
-          // IFrame 삽입
-          nhn.husky.EZCreator.createInIFrame({
-          	oAppRef: oEditors,
-          	elPlaceHolder: "writeInpContent",
-          	sSkinURI: "../../smarteditor/SmartEditor2Skin.html",
-          	htParams : {
-          		bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-          		bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-          		bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-          		//bSkipXssFilter : true,		// client-side xss filter 무시 여부 (true:사용하지 않음 / 그외:사용)
-          		//aAdditionalFontList : aAdditionalFontSet,		// 추가 글꼴 목록
-          		fOnBeforeUnload : function(){
-          			//alert("완료!");
-          		},
-          		I18N_LOCALE : sLang
-          	}, //boolean
-          	fOnAppLoad : function(){
-          		//예제 코드
-          		//oEditors.getById["ir1"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
-          	},
-          	fCreator: "createSEditor2"
-          });
+               function submitContents(elClickedObj) {
+                    var editor = CKEDITOR.instances.writeInpContent
+                      , editor_Data = editor.getData();
+                    if (editor_Data.length < 1) {
+                         alert("내용을 입력해주세요!");
+                         return;
+                    }
 
-          function submitContents(elClickedObj) {
-          	oEditors.getById["writeInpContent"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
-
-          	// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
-
-          	try {
-          		elClickedObj.form.submit();
-          	} catch(e) {}
-          }
+                    try {
+                         elClickedObj.form.submit();
+                    } catch (e) {}
+               }
           </script>
-
           <!-- jQuery -->
           <script src="//code.jquery.com/jquery.js"></script>
           <!-- Bootstrap JavaScript -->

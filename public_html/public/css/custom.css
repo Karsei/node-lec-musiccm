@@ -58,6 +58,19 @@ table > thead > tr > th {
      body {
           padding-top: 70px;
      }
+
+     /********************************************
+      * SHEET
+     *********************************************/
+     .sheet-article .sheet-img {
+          text-align: center;
+     }
+     .sheet-article .sheet-body {
+          text-align: center;
+     }
+     .sheet-article .sheet-info {
+          text-align: center;
+     }
 }
 
 /*****************************************************
@@ -111,6 +124,27 @@ table > thead > tr > th {
  * [Play Board]
  *
 ******************************************************/
+.play-list a {
+     color: #000;
+     text-decoration: none;
+}
+.play-article {
+     position: relative;
+     padding: 10px;
+     margin-bottom: 10px;
+     background-color: #eee;
+     transition: background-color 0.5s;
+}
+.play-article:hover {
+     background-color: #ffecd6;
+}
+.play-article .play-title {
+     margin-bottom: 0px;
+}
+.play-article .play-date {
+     font-size: 6pt;
+}
+
 .play-bottom {
      position: relative;
 }
@@ -137,19 +171,36 @@ table > thead > tr > th {
  * [Sheet Board]
  *
 ******************************************************/
+.sheet-list a {
+     color: #000;
+     text-decoration: none;
+}
 .sheet-article {
      position: relative;
      padding: 10px;
      margin-bottom: 10px;
      background-color: #eee;
+     transition: background-color 0.5s;
+}
+.sheet-article:hover {
+     background-color: #ffecd6;
 }
 .sheet-article .sheet-id {
-     vertical-align: middle;
+     font-size: 20pt;
+     font-weight: bold;
+     padding-left: 25px;
 }
 .sheet-article .sheet-info {
      padding-top: 10px;
 }
 .sheet-article .glyphicon {
+     margin-right: 10px;
+}
+.sheet-article label.badge {
+     margin-right: 3px;
+     vertical-align: baseline;
+}
+.sheet-article span {
      margin-right: 10px;
 }
 
@@ -162,6 +213,27 @@ table > thead > tr > th {
      right: 0px;
 }
 
-.sheet-list .sheet-pagination {
+.sheet-pagination {
      text-align: center;
+}
+
+/*****************************************************
+ *
+ * [BOARD - view]
+ *
+******************************************************/
+.view-article {
+     background-color: #f7f7f9;
+}
+.view-article .view-head,
+.view-article .view-content {
+     padding-top: 6px;
+}
+.view-bottom {
+     position: relative;
+}
+.view-bottom .view-bottom-right {
+     position: absolute;
+     top: 0px;
+     right: 0px;
 }

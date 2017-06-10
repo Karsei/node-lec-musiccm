@@ -13,10 +13,25 @@ var LocalStrategy = require('passport-local').Strategy;
 var NaverStrategy = require('passport-naver').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
+// MySQL
+var mysql = require('mysql');
+
+// ROUTES
 var index = require('./routes/index');
 var users = require('./routes/users');
 var board = require('./routes/board');
+var service = require('./routes/service');
 
+/*********************************************
+ * MySQL Connection
+**********************************************/
+var sqlPool = mysql.createPool({
+     connectionLimit: 3,
+     host: config.sql.host,
+     user: config.sql.user,
+     database: config.sql.database,
+     password: config.sql.password
+});
 
 /*********************************************
  * OAuth 2.0 with PASSPORT.js
@@ -35,12 +50,55 @@ passport.use(new NaverStrategy({
           passReqToCallback: true
      }, function(request, accessToken, refreshToken, profile, done) {
           process.nextTick(function () {
-               var _profile = profile._json;
+               sqlPool.getConnection(function (err, connection) {
+                    if (err)  console.error("Error: " + err);
 
-               console.log(profile);
-               console.log(" - [NAVER] ACCESS TOKEN: " + accessToken);
-               console.log(" - [NAVER] REFRESH TOKEN: " + refreshToken);
-               return done(null, profile);
+                    // 기존 유저 정보 가져오기
+                    var q;
+                    q = "SELECT * FROM mc_users WHERE aid = '" + profile.id + "';";
+                    connection.query(q, function (err2, bdrows) {
+                         if (err2)  console.error("Error: " + err2);
+
+                         if (bdrows.length < 1) {
+                              // 기존에 등록된 유저가 없으면 데이터 추가
+                              q = "INSERT INTO mc_users(`aid`, `nickname`) VALUES('" + profile.id + "', '" + profile.displayName + "');";
+                              connection.query(q, function (err3, isurows) {
+                                   if (err3)  console.error("Error: " + err3);
+
+                                   console.log("유저 추가됨");
+
+                                   // 연결 해제
+                                   connection.release();
+
+                                   console.log(" - [NAVER] ACCESS TOKEN: " + accessToken);
+                                   console.log(" - [NAVER] REFRESH TOKEN: " + refreshToken);
+                                   return done(null, profile);
+                              });
+                         } else if (bdrows.length == 1) {
+                              // 이미 등럭된 유저
+                              console.log("기존 유저임");
+
+                              profile.cmid = bdrows[0].id;
+
+                              // 연결 해제
+                              connection.release();
+
+                              console.log(" - [NAVER] ACCESS TOKEN: " + accessToken);
+                              console.log(" - [NAVER] REFRESH TOKEN: " + refreshToken);
+                              return done(null, profile);
+                         } else {
+                              // 잘못된 데이터베이스
+                              console.log("잘못된 정보");
+
+                              // 연결 해제
+                              connection.release();
+
+                              console.log(" - [NAVER] ACCESS TOKEN: " + accessToken);
+                              console.log(" - [NAVER] REFRESH TOKEN: " + refreshToken);
+                              return done(null, profile);
+                         }
+                    });
+               });
           });
      }
 ));
@@ -71,8 +129,8 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '10mb', parameterLimit: 1000000 }));
+app.use(bodyParser.urlencoded({ extended: false, limit: '10mb', parameterLimit: 1000000 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -122,6 +180,7 @@ app.get('/logout', function (req, res) {
 app.use('/', index);
 app.use('/users', users);
 app.use('/board', board);
+app.use('/service', service);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
