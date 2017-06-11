@@ -111,12 +111,14 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          </div>
 
                          <div class="sheet-bottom">
-                              <a class="btn btn-default" href="/board/sheet/list" role="button">목록</a>
-                              <div class="sheet-bottom-right">
-                                   <a class="btn btn-primary" href="/board/sheet/write" role="button">글쓰기</a>
+                              <div class="sheet-option">
+                                   <a class="btn btn-default" href="/board/sheet/list" role="button">목록</a>
+                                   <div class="sheet-bottom-right">
+                                        <a class="btn btn-primary" href="/board/sheet/write" role="button">글쓰기</a>
+                                   </div>
                               </div>
                               <div class="sheet-search">
-                                   <form name="board-search" action="/board/sheet/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                   <form class="board-search" name="board-search" action="/board/sheet/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                         <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
                                         <input type="text" id="search" name="search" value="" placeholder="제목 기준">
                                         <input type="submit" class="btn btn-default" value="검색">

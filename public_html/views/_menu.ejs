@@ -29,10 +29,19 @@
                                    <a href="/logout"><span class="glyphicon glyphicon-off"></span>로그아웃</a><% } %>
                               </li>
                          </ul>
-                         <form class="navbar-form navbar-right">
-                              <input type="text" id="search" name="search" class="form-control" placeholder="검색어를 입력하세요">
-                              <input type="submit" class="form-control" value="검색">
+                         <form class="search-form navbar-form navbar-right">
+                              <div class="form-group has-feedback">
+                                   <input type="text" id="search" name="search" class="form-control" aria-describedby="inputSearchStatus" placeholder="검색어를 입력하세요">
+                                   <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+                                   <span id="inputSearchStatus" class="sr-only">(검색)</span>
+                              </div>
+                              <!--input type="text" id="search" name="search" class="form-control" placeholder="검색어를 입력하세요">
+                              <input type="submit" class="form-control" value="검색"-->
                          </form>
+                         <div class="rtkeyword-form navbar-right ">
+                              <ul class="rtkeyword">
+                              </ul>
+                         </div>
                     </div>
                </div>
           </nav>
@@ -67,8 +76,8 @@
                                    </div>
                               </form>
                               <ul>
-                                   <li><a class="btn btn-success btn-width200" href="/auth/login/naver">네이버로 로그인</a></li>
-                                   <li><a class="btn btn-primary btn-width200" href="/auth/login/facebook">페이스북으로 로그인</a></li>
+                                   <li><a class="btn btn-naver btn-width200" href="/auth/login/naver">네이버로 로그인</a></li>
+                                   <li><a class="btn btn-facebook btn-width200" href="/auth/login/facebook">페이스북으로 로그인</a></li>
                               </ul>
                          </div>
                     </div>

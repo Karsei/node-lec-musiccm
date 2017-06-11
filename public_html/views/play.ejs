@@ -81,15 +81,15 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                     <div class="col-sm-12">
                          <hr/>
                          <div class="well play-popular">
-                              <h2>인기 게시물</h2>
-                              <div class="row"><% for (var i = 0; i < boardData.length; i++) { %><% if (i == 3) { break; } %>
+                              <h2><span class="glyphicon glyphicon-star"></span>인기 게시물</h2>
+                              <div class="row popular-list"><% for (var i = 0; i < boardData.length; i++) { %><% if (i == 3) { break; } %>
                                    <a href="/board/play/view/<%= boardData[i].a_id %>">
-                                        <div class="col-sm-4 play-article">
-                                             <p class="play-id"><%= boardData[i].a_id %></p>
-                                             <p class="play-img text-center"><img src="<%= boardData[i].a_youtubethum %>" class="img-thumbnail" alt=""></p>
-                                             <h4 class="play-title"><%= boardData[i].a_title %> <small><label class="label label-info"><%= boardData[i].c_name %></label></small></h4>
-                                             <p class="play-nickname"><%= boardData[i].u_nickname %><br><span class="play-date"><%= (new Date(boardData[i].a_date)).format("yyyy/MM/dd HH:mm:ss") %></span></p>
-                                             <p class="play-content"><%- _trimDotString(striptags(boardData[i].a_content), 50) %></p>
+                                        <div class="col-sm-4 play-popular-article">
+                                             <p class="play-popular-id"><%= boardData[i].a_id %></p>
+                                             <p class="play-popular-img text-center"><img src="<%= boardData[i].a_youtubethum %>" class="img-thumbnail" alt=""></p>
+                                             <h4 class="play-popular-title"><%= boardData[i].a_title %> <small><label class="label label-info"><%= boardData[i].c_name %></label></small></h4>
+                                             <p class="play-popular-nickname"><%= boardData[i].u_nickname %><br><span class="play-date"><%= (new Date(boardData[i].a_date)).format("yyyy/MM/dd HH:mm:ss") %></span></p>
+                                             <p class="play-popular-content"><%- _trimDotString(striptags(boardData[i].a_content), 50) %></p>
                                         </div><% } %>
                                    </a>
                               </div>
@@ -122,7 +122,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                    <a class="btn btn-primary" href="/board/play/write" role="button">글쓰기</a>
                               </div>
                               <div class="play-search">
-                                   <form name="board-search" action="/board/play/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                   <form class="board-search" name="board-search" action="/board/play/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                         <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
                                         <input type="text" id="search" name="search" value="" placeholder="제목 기준">
                                         <input type="submit" class="btn btn-default" value="검색">

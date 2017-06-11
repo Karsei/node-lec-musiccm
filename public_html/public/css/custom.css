@@ -42,7 +42,7 @@ table > thead > tr > th {
 ****************************************/
 @media screen and (max-width: 1199px) {
      body {
-          padding-top: 50px;
+          padding-top: 100px;
      }
 }
 
@@ -57,6 +57,10 @@ table > thead > tr > th {
      body {
           padding-top: 50px;
      }
+
+     /********************************************
+      * Menu
+     *********************************************/
 
      /********************************************
       * SHEET
@@ -77,8 +81,120 @@ table > thead > tr > th {
  * [Navi]
  *
 ******************************************************/
+.navbar-default {
+     background-color: #eb7f00;
+     border-color: #d37200;
+}
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav>li>a {
+     color: #f3ffe2;
+}
+.navbar-default .navbar-brand:hover {
+     color: #ffdeb7;
+}
+.navbar-default .navbar-nav>li>a:hover {
+     background-color: #f3ffe2;
+     color: #000;
+}
+.navbar-default .navbar-nav>.active>a,
+.navbar-default .navbar-nav>.active>a:focus,
+.navbar-default .navbar-nav>.active>a:hover {
+     background-color: #ffb038;
+     color: #000;
+}
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover {
+     background-color: #ffb038;
+     color: #f3ffe2;
+}
+.navbar-default .navbar-toggle:focus,
+.navbar-default .navbar-toggle:hover {
+     background-color: #337ab7;
+     border-color: #337ab7;
+}
+.navbar-default .navbar-toggle .icon-bar {
+     background-color: #fff;
+}
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+     background-color: #eb7f00;
+     border-color: #eb7f00;
+}
+
+.btn-naver {
+     color: #fff;
+     background-color: #5cb85c;
+     border-color: #4cae4c;
+}
+.btn-facebook {
+     color: #fff;
+     background-color: #337ab7;
+     border-color: #2e6da4;
+}
+.btn-primary {
+     color: #000;
+     background-color: #ffb038;
+     border-color: #ffa216;
+}
+
 .navbar-form > input {
      padding: 5px 10px;
+}
+.rtkeyword-form {
+     position: relative;
+     width: 200px;
+     height: 50px;
+     overflow: hidden;
+     cursor: default;
+}
+.rtkeyword-form:hover {
+     overflow: visible;
+}
+.rtkeyword {
+     position: absolute;
+     width: 100%;
+     max-height: 188px;
+     margin: 0;
+     padding-top: 3px;
+     padding-left: 25px;
+     padding-right: 15px;
+     color: #fff0a5;
+}
+.rtkeyword:hover {
+     background-color: #ffb038;
+     color: #333;
+     overflow-y: scroll;
+}
+.rtkeyword > li {
+     line-height: 35pt;
+}
+
+.search-form span {
+     color: #fff;
+}
+.search-form input[type=text] {
+     background-color: transparent;
+     border: 0;
+     border-radius: 0;
+     outline: none;
+     box-shadow: none;
+     border-color: transparent;
+     color: #fff;
+     border-bottom: 2px solid #fff;
+     width: 20px;
+     transition: width 0.5s;
+}
+.search-form input[type=text]::-webkit-input-placeholder {
+     color: #fff;
+}
+.search-form input[type=text]:focus {
+     outline: none !important;
+     width: 200px;
 }
 
 /*****************************************************
@@ -103,6 +219,26 @@ table > thead > tr > th {
  * [Index]
  *
 ******************************************************/
+.index-list {
+     margin-top: 20px;
+}
+
+.index-notice > ul {
+     list-style: none;
+     line-height: 14pt;
+     padding: 5px;
+}
+.index-notice > ul > li {
+     padding: 20px 20px;
+     border-bottom: 1px solid #bbb;
+}
+.index-notice > ul > li:hover {
+     background-color: #f7f7f7;
+}
+.index-notice > ul > li > span {
+     margin-right: 20px;
+}
+
 .slide-nav {
      position: absolute;
 }
@@ -131,14 +267,52 @@ table > thead > tr > th {
  * [Mentor Board]
  *
 ******************************************************/
-.mentor-bottom {
-     position: relative;
+.mentor-question {
+}
+
+.mentor-article > .row {
      margin-bottom: 20px;
 }
-.mentor-bottom .mentor-bottom-right {
-     position: absolute;
-     top: 0px;
-     right: 0px;
+.mentor-article .media-body,
+.mentor-article .media-left,
+.mentor-article .media-right {
+     vertical-align: baseline;
+}
+.mentor-question .media-body,
+.mentor-answer .media-body {
+     background-color: #f7f7f7;
+}
+.mentor-question .media-body .btn-article-reply,
+.mentor-answer .media-body .btn-article-reply {
+     margin-left: 20px;
+}
+.mentor-question .media-body {
+     border: 2px solid #ccc;
+     border-radius: 10px;
+     padding-left: 20px;
+}
+.mentor-answer .media-body {
+     border: 2px solid #ccc;
+     border-radius: 10px;
+     padding-left: 20px;
+}
+.mentor-answer .media-body .mentor-article-reply {
+     margin-bottom: 10px;
+}
+
+.mentor-bottom .mentor-write {
+     margin-bottom: 20px;
+}
+.mentor-bottom .mentor-write  input {
+     padding: 15px;
+     height: 54px;
+}
+.mentor-bottom .mentor-write  a {
+     padding: 15px;
+}
+.mentor-bottom .mentor-write .btn {
+     border-radius: 0px;
+     height: 54px;
 }
 .mentor-bottom .mentor-search {
      text-align: center;
@@ -152,6 +326,42 @@ table > thead > tr > th {
  * [Play Board]
  *
 ******************************************************/
+.play-popular {
+     padding: 0px;
+}
+.play-popular a {
+     color: #000;
+     text-decoration: none;
+}
+.play-popular > h2 {
+     padding-left: 20px;
+}
+.play-popular > h2 > span {
+     padding-right: 10px;
+     vertical-align: baseline;
+}
+.play-popular > .popular-list {
+     margin: 20px 20px 10px 20px;
+}
+.play-popular .play-popular-article {
+     position: relative;
+     padding: 20px;
+     height: 320px;
+     margin-bottom: 10px;
+     border: 5px solid #fff;
+     background-color: #eee;
+     transition: background-color 0.5s;
+}
+.play-popular .play-popular-article:hover {
+     background-color: #ffecd6;
+}
+.play-popular .play-popular-article .play-title {
+     margin-bottom: 0px;
+}
+.play-popular .play-popular-article .play-date {
+     font-size: 6pt;
+}
+
 .play-list a {
      color: #000;
      text-decoration: none;
@@ -239,6 +449,9 @@ table > thead > tr > th {
      position: relative;
      margin-bottom: 20px;
 }
+.sheet-bottom .sheet-option {
+     margin-bottom: 20px;
+}
 .sheet-bottom .sheet-bottom-right {
      position: absolute;
      top: 0px;
@@ -257,7 +470,9 @@ table > thead > tr > th {
  *
 ******************************************************/
 .view-article {
+     padding: 20px;
      background-color: #f7f7f9;
+     margin-bottom: 20px;
 }
 .view-article .view-head,
 .view-article .view-content {
@@ -265,6 +480,9 @@ table > thead > tr > th {
 }
 .view-bottom {
      position: relative;
+     margin-bottom: 20px;
+}
+.view-bottom .view-option {
      margin-bottom: 20px;
 }
 .view-bottom .view-bottom-right {
@@ -298,6 +516,22 @@ table > thead > tr > th {
 ******************************************************/
 .delete-form {
      margin-top: 20px;
+}
+
+/*****************************************************
+ *
+ * [BOARD - Search]
+ *
+******************************************************/
+.board-search > input[type=text] {
+     padding: 10px;
+     width: 250px;
+     height: 40px;
+     vertical-align: baseline;
+}
+.board-search > input[type=submit] {
+     height: 40px;
+     border-radius: 0px;
 }
 
 /*****************************************************

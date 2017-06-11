@@ -152,11 +152,13 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          </form>
 
                          <div class="view-bottom">
-                              <a class="btn btn-default" href="/board/<%= bid %>/list" role="button">목록</a>
-                              <div class="view-bottom-right"><% if (boardData[0].a_user == loginUser) { %>
-                                   <a class="btn btn-danger" href="/board/<%= bid %>/delete/<%= boardData[0].a_id %>" role="button">삭제</a>
-                                   <a class="btn btn-primary" href="/board/<%= bid %>/modify/<%= boardData[0].a_id %>" role="button">수정</a>
-                              </div><% } %>
+                              <div class="view-option">
+                                   <a class="btn btn-default" href="/board/<%= bid %>/list" role="button">목록</a>
+                                   <div class="view-bottom-right"><% if (boardData[0].a_user == loginUser) { %>
+                                        <a class="btn btn-danger" href="/board/<%= bid %>/delete/<%= boardData[0].a_id %>" role="button">삭제</a>
+                                        <a class="btn btn-primary" href="/board/<%= bid %>/modify/<%= boardData[0].a_id %>" role="button">수정</a>
+                                   </div><% } %>
+                              </div>
                          </div>
                     </div>
                </div>

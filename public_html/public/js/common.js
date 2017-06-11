@@ -4,6 +4,9 @@ Author By. Jin-Yong, Lee
 
 **/
 
+
+const API_KEYWORD_AJAX_URL = "http://project.karsei.pe.kr:5010/board/keyword";
+
 /***************************
 * [엘레멘트 가져오기]
 * @param e                    엘레멘트
@@ -115,3 +118,26 @@ function Board_Search(EFormObj) {
 
      return false;
 }
+
+;(function () {
+     console.log("Working well");
+
+     // 실시간 검색 출력
+     var $keyul = $(".rtkeyword");
+     $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: API_KEYWORD_AJAX_URL,
+          data: "query=" + "getKeyword",
+          success: function (keylist) {
+               for (var i = 0; i < keylist.length; i++) {
+                    if (i == 10) { break; }
+                    var $li = $("<li>").text(keylist[i].keyword);
+                    $keyul.append($li);
+               }
+          },
+          error: function (req, status, err) {
+               console.error("code: " + req.status + "\n" + req.responseText + "\n" + "error: " + err);
+          }
+     });
+})();

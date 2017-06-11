@@ -758,8 +758,25 @@ router.post('/:bid/deleteok/:number', function(req, res, next) {
      });
 });
 
-/* POST Board - SearchList */
-router.post('/searchlist', function(req, res, next) {
+/* POST Board - Keyword */
+router.post('/keyword', function(req, res, next) {
+     if (req.body.query) {
+          switch (req.body.query) {
+               case "getKeyword":
+                    sqlPool.getConnection(function (err, connection) {
+                         var q;
+                         q = "SELECT * FROM musiccm.mc_searchlist " +
+                             "ORDER BY id DESC;";
+                         connection.query(q, function (searcherr, searchrows) {
+                              if (searcherr)  console.error("Error: " + searcherr);
+                              // 연결 해제
+                              connection.release();
+                              res.send(JSON.stringify(searchrows));
+                         });
+                    });
+               break;
+          }
+     }
 });
 
 function getSelectQuery(bid) {
