@@ -190,7 +190,7 @@ passport.use(new FacebookStrategy({
 
                                    // 등록 고유 ID 가져오기
                                    var q;
-                                   q = "SELECT * FROM mc_users WHERE aid = '" + email + "';";
+                                   q = "SELECT * FROM mc_users WHERE aid = '" + profile.id + "';";
                                    connection.query(q, function (err4, idrows) {
                                         if (err4)  console.error("Error: " + err4);
 
