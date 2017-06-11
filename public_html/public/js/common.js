@@ -5,6 +5,15 @@ Author By. Jin-Yong, Lee
 **/
 
 /***************************
+* [엘레멘트 가져오기]
+* @param e                    엘레멘트
+* @return 속성 정보
+****************************/
+function E(e) {
+     return document.getElementById(e);
+}
+
+/***************************
  * [숫자 3개마다 콤마]
  * @param number              숫자
  * @return 3개마다 콤마가 찍힌 문자열
@@ -52,3 +61,57 @@ Date.prototype.format = function (f) {
 String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
 String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
 Number.prototype.zf = function (len) { return this.toString().zf(len); };
+
+/******************************************************
+ * [Menu]
+*******************************************************/
+// 로그인
+function btnMenuSignin(elClickedObj) {
+     if (E("signInpEmail").value.length < 1) {
+          alert("이메일을 입력해주세요!");
+          E("signInpEmail").focus();
+          return;
+     }
+     if (E("signInpPassword").value.length < 1) {
+          alert("비밀번호를 입력해주세요!");
+          E("signInpPassword").focus();
+          return;
+     }
+
+     $(".signin > form").attr("action", "/auth/signin");
+
+     try {
+          elClickedObj.form.submit();
+     } catch (e) {}
+}
+// 가입
+function btnMenuSignUp(elClickedObj) {
+     if (E("signInpEmail").value.length < 1) {
+          alert("이메일을 입력해주세요!");
+          E("signInpEmail").focus();
+          return;
+     }
+     if (E("signInpPassword").value.length < 1) {
+          alert("비밀번호를 입력해주세요!");
+          E("signInpPassword").focus();
+          return;
+     }
+
+     $(".signin > form").attr("action", "/auth/signup");
+
+     try {
+          elClickedObj.form.submit();
+     } catch (e) {}
+}
+
+// 폼
+function Board_Search(EFormObj) {
+     console.log("예스");
+     if (EFormObj.InpBoardSearch.value.length < 1) {
+          alert("검색어를 입력해주세요!");
+          EFormObj.InpBoardSearch.focus();
+          return false;
+     }
+
+     return false;
+}

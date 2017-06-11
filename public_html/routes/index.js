@@ -21,6 +21,9 @@ router.get('/', function(req, res, next) {
 router.get('/index', function(req, res, next) {
      var loginstate = common.getUserState(req);
      common.activeMenu(menus, "index");
+     if (req.user != undefined) {
+          console.log(req.user);
+     }
      res.render('index', {
           title: basic.HOMEPAGE_TITLE,
           bUrl: basic.HOMEPAGE_URL,
@@ -74,15 +77,10 @@ router.get('/sheet', function(req, res, next) {
 });
 /* GET - Mypage */
 router.get('/mypage', function(req, res, next) {
-     var loginstate = common.getUserState(req);
-     var loginContent = "";
-     if (loginstate) {
-          loginContent = JSON.stringify(req.user._json);
-     }
      res.render('mypage', {
           title: basic.HOMEPAGE_TITLE,
           bUrl: basic.HOMEPAGE_URL,
-          loginState: loginContent
+          loginState: req.user
      });
 });
 

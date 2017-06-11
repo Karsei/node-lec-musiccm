@@ -20,30 +20,107 @@
 
      <body>
 <% include _menu %>
-          <div class="container">
-               <div class="row">
-                    <h1>INDEX</h1>
-                    <h4>2017-04-19</h4>
-                    <ul>
-                         <li>메뉴 구성</li>
-                         <li>로그인 세션</li>
-                         <li>샘플 게시판 구성</li>
-                         <li>디버깅을 위한 내 정보 페이지</li>
-                    </ul>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ex nec sem imperdiet viverra at consequat ipsum. Aenean id magna sit amet nisl rutrum sagittis a non arcu. Nullam at imperdiet est, non convallis nulla. Morbi iaculis felis turpis, eget viverra ante imperdiet in. Integer quis risus libero. Mauris scelerisque felis quis felis pretium sodales. Etiam libero neque, venenatis et diam nec, vehicula consectetur lectus. Aliquam justo mi, volutpat id porta non, tempor sit amet lacus. Sed blandit ut justo non eleifend. Sed a dui eleifend eros eleifend cursus in ut nulla. Mauris sed nisi lobortis, accumsan mauris sit amet, iaculis massa. Cras eget velit a turpis tristique congue nec non ipsum.</p>
-                    <p>Aliquam semper ultricies massa, vestibulum aliquam magna sollicitudin a. Quisque aliquet in enim sed ultrices. Curabitur nisi nibh, vehicula in porta ac, pharetra ut massa. Duis quis purus quis mauris iaculis auctor ac in nisi. Donec iaculis scelerisque orci sed consectetur. Aliquam fermentum eros eu lectus lobortis, sed volutpat sem venenatis. Integer id arcu libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                    <p>Curabitur elementum lorem ultrices dolor elementum, sit amet lacinia nisi consequat. Morbi vel tellus eu eros mattis iaculis. Aenean eu nulla fringilla, commodo felis non, fermentum mi. Vivamus gravida tellus tincidunt neque semper, eget dapibus ipsum pellentesque. Mauris nec mauris vel urna ultrices tristique. Ut a turpis aliquam, ultricies dolor sit amet, congue odio. Nam lacinia elit mi, et dignissim risus ullamcorper vitae. Sed hendrerit placerat accumsan. Fusce faucibus ac enim ultrices eleifend. Curabitur vestibulum et urna eu consequat.</p>
-                    <p>Phasellus lorem tortor, mollis at tellus non, cursus tristique massa. Quisque ligula lectus, vehicula at hendrerit quis, venenatis eget velit. Quisque cursus volutpat justo non fermentum. Curabitur commodo odio ut nunc tempor ultrices. Cras vitae velit aliquet, porta magna sed, facilisis risus. Suspendisse vitae molestie arcu. Nunc facilisis vel urna vel elementum. Vivamus vitae blandit enim, at iaculis nulla. Sed vel neque non mauris dictum feugiat. Morbi in ligula mollis, feugiat felis quis, consequat lectus. Fusce faucibus tempus mattis. Donec sed ligula at turpis vehicula porttitor. Curabitur odio nulla, blandit nec leo vitae, auctor finibus dolor. In maximus nisi vitae elit lacinia, eget iaculis ligula sollicitudin. In mauris nulla, commodo bibendum quam ut, iaculis sollicitudin nisi. Cras orci enim, scelerisque id felis eu, rutrum ornare magna.</p>
-                    <p>Morbi consectetur hendrerit ante. Donec luctus turpis vitae mauris mattis, sit amet finibus ligula dapibus. Maecenas commodo ultrices felis at fringilla. Vestibulum venenatis quam hendrerit, varius est ut, tristique tellus. Donec dictum diam nec metus scelerisque, convallis vulputate lectus ullamcorper. Maecenas tempus, tortor rhoncus blandit sagittis, lacus ligula euismod lorem, eu rutrum risus orci vel nunc. Duis blandit arcu dui, non rhoncus massa finibus ut. Vestibulum laoreet tristique lectus, in lobortis elit finibus eget. Nulla facilisi.</p>
+          <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:1300px;height:400px;overflow:hidden;visibility:hidden;">
+               <div data-u="loading" style="position:absolute;top:0px;left:0px;background:url('img/loading.gif') no-repeat 50% 50%;background-color:rgba(0, 0, 0, 0.7);"></div>
+               <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:1300px;height:500px;overflow:hidden;">
+                    <div>
+                         <img data-u="image" src="img/pianoflow.jpg" />
+                         <div style="position:absolute;top:150px;left:70px;width:380px;height:60px;z-index:0;padding-left:10px;font-size:40px;color:#ffffff;background-color:rgba(0, 0, 0, 0.5);line-height:60px;">음악을 즐겨보세요!</div>
+                         <div style="position:absolute;top:300px;left:70px;width:500px;height:120px;z-index:0;font-size:20px;color:#333;line-height:38px;">음악이 살아숨쉬는 곳, <b>음악의 대명사</b>입니다.</div>
+                    </div>
+                    <div>
+                         <img data-u="image" src="img/musicdance.jpg" />
+                         <div style="position:absolute;top:200px;right:105px;width:400px;height:60px;z-index:0;padding-left:10px;font-size:40px;color:#fff;background-color:rgba(1, 1, 1, 0.5);line-height:60px;">음악을 공유해보세요!</div>
+                         <div style="position:absolute;top:300px;right:70px;width:500px;height:120px;z-index:0;font-size:20px;color:#fff;line-height:38px;">다른 사람들이 연주한거나, 모르는 것을 물어보세요!</div>
+                    </div>
+                    <a data-u="any" href="https://project.karsei.pe.kr:5010" style="display:none">음악의 대명사</a>
+               </div>
+
+               <div data-u="navigator" class="slide-nav" style="bottom:16px;right:16px;" data-autocenter="1">
+                    <div data-u="prototype" style="width:16px;height:16px;"></div>
+               </div>
+
+               <div data-u="arrowleft" class="slide-arrow" style="width:50px;height:50px;top:0px;left:20px;" data-autocenter="2">
+                    <svg viewbox="-12986 -2977 16000 16000" style="width:100%;height:100%;">
+                         <polygon class="a" points="-1182.1,12825.5 -792,12435.4 -8204.5,5023 -792,-2389.4 -1182.1,-2779.5 -8984.8,5023"></polygon>
+                    </svg>
+               </div>
+               <div data-u="arrowright" class="slide-arrow" style="width:50px;height:50px;top:0px;right:20px;" data-autocenter="2">
+                    <svg viewbox="-12986 -2977 16000 16000" style="width:100%;height:100%;">
+                         <polygon class="a" points="-8594.7,12825.5 -8984.8,12435.4 -1572.3,5023 -8984.8,-2389.4 -8594.7,-2779.5 -792,5023"></polygon>
+                    </svg>
                </div>
           </div>
 
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+          <div class="container">
+               <div class="row">
+                    <div class="col-sm-12">
+                         <h1>INDEX</h1>
+                         <h4>2017-06-11</h4>
+                         <ul>
+                              <li>수정된 사항 엄청 많음</li>
+                         </ul>
+                         <h4>2017-04-19</h4>
+                         <ul>
+                              <li>메뉴 구성</li>
+                              <li>로그인 세션</li>
+                              <li>샘플 게시판 구성</li>
+                              <li>디버깅을 위한 내 정보 페이지</li>
+                         </ul>
+                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ex nec sem imperdiet viverra at consequat ipsum. Aenean id magna sit amet nisl rutrum sagittis a non arcu. Nullam at imperdiet est, non convallis nulla. Morbi iaculis felis turpis, eget viverra ante imperdiet in. Integer quis risus libero. Mauris scelerisque felis quis felis pretium sodales. Etiam libero neque, venenatis et diam nec, vehicula consectetur lectus. Aliquam justo mi, volutpat id porta non, tempor sit amet lacus. Sed blandit ut justo non eleifend. Sed a dui eleifend eros eleifend cursus in ut nulla. Mauris sed nisi lobortis, accumsan mauris sit amet, iaculis massa. Cras eget velit a turpis tristique congue nec non ipsum.</p>
+                         <p>Aliquam semper ultricies massa, vestibulum aliquam magna sollicitudin a. Quisque aliquet in enim sed ultrices. Curabitur nisi nibh, vehicula in porta ac, pharetra ut massa. Duis quis purus quis mauris iaculis auctor ac in nisi. Donec iaculis scelerisque orci sed consectetur. Aliquam fermentum eros eu lectus lobortis, sed volutpat sem venenatis. Integer id arcu libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+                         <p>Curabitur elementum lorem ultrices dolor elementum, sit amet lacinia nisi consequat. Morbi vel tellus eu eros mattis iaculis. Aenean eu nulla fringilla, commodo felis non, fermentum mi. Vivamus gravida tellus tincidunt neque semper, eget dapibus ipsum pellentesque. Mauris nec mauris vel urna ultrices tristique. Ut a turpis aliquam, ultricies dolor sit amet, congue odio. Nam lacinia elit mi, et dignissim risus ullamcorper vitae. Sed hendrerit placerat accumsan. Fusce faucibus ac enim ultrices eleifend. Curabitur vestibulum et urna eu consequat.</p>
+                         <p>Phasellus lorem tortor, mollis at tellus non, cursus tristique massa. Quisque ligula lectus, vehicula at hendrerit quis, venenatis eget velit. Quisque cursus volutpat justo non fermentum. Curabitur commodo odio ut nunc tempor ultrices. Cras vitae velit aliquet, porta magna sed, facilisis risus. Suspendisse vitae molestie arcu. Nunc facilisis vel urna vel elementum. Vivamus vitae blandit enim, at iaculis nulla. Sed vel neque non mauris dictum feugiat. Morbi in ligula mollis, feugiat felis quis, consequat lectus. Fusce faucibus tempus mattis. Donec sed ligula at turpis vehicula porttitor. Curabitur odio nulla, blandit nec leo vitae, auctor finibus dolor. In maximus nisi vitae elit lacinia, eget iaculis ligula sollicitudin. In mauris nulla, commodo bibendum quam ut, iaculis sollicitudin nisi. Cras orci enim, scelerisque id felis eu, rutrum ornare magna.</p>
+                         <p>Morbi consectetur hendrerit ante. Donec luctus turpis vitae mauris mattis, sit amet finibus ligula dapibus. Maecenas commodo ultrices felis at fringilla. Vestibulum venenatis quam hendrerit, varius est ut, tristique tellus. Donec dictum diam nec metus scelerisque, convallis vulputate lectus ullamcorper. Maecenas tempus, tortor rhoncus blandit sagittis, lacus ligula euismod lorem, eu rutrum risus orci vel nunc. Duis blandit arcu dui, non rhoncus massa finibus ut. Vestibulum laoreet tristique lectus, in lobortis elit finibus eget. Nulla facilisi.</p>
+                    </div>
+               </div>
+          </div>
+
+<% include _foot %>
+          <!-- jssor -->
+          <script type="text/javascript" src="js/jssor.slider-24.1.5.min.js"></script>
+          <script type="text/javascript">
+          jQuery(document).ready(function ($) {
+               var jssor_1_SlideoTransitions = [
+                    [{b:900,d:2000,x:-379,e:{x:7}}],
+                    [{b:900,d:2000,x:-379,e:{x:7}}],
+                    [{b:-1,d:1,o:-1,sX:2,sY:2},{b:0,d:900,x:-171,y:-341,o:1,sX:-2,sY:-2,e:{x:3,y:3,sX:3,sY:3}},{b:900,d:1600,x:-283,o:-1,e:{x:16}}]
+               ];
+
+               var jssor_1_options = {
+                    $AutoPlay: 1,
+                    $SlideDuration: 800,
+                    $SlideEasing: $Jease$.$OutQuint,
+                    $CaptionSliderOptions: {
+                         $Class: $JssorCaptionSlideo$,
+                         $Transitions: jssor_1_SlideoTransitions
+                    },
+                    $ArrowNavigatorOptions: {
+                         $Class: $JssorArrowNavigator$
+                    },
+                    $BulletNavigatorOptions: {
+                         $Class: $JssorBulletNavigator$
+                    }
+               };
+
+               var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+               /** Responsive **/
+               function ScaleSlider() {
+                    var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                    if (refSize) {
+                         refSize = Math.min(refSize, 1920);
+                         jssor_1_slider.$ScaleWidth(refSize);
+                    }
+                    else {
+                         window.setTimeout(ScaleSlider, 30);
+                    }
+               }
+               ScaleSlider();
+               $(window).bind("load", ScaleSlider);
+               $(window).bind("resize", ScaleSlider);
+               $(window).bind("orientationchange", ScaleSlider);
+          });
+          </script>
      </body>
 </html>

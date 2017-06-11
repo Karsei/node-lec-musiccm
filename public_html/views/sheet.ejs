@@ -81,8 +81,9 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                     <hr>
 
                     <div class="col-sm-2">
-                         <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %>
-                              <li role="presentation"><a href="/board/sheet/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } %>
+                         <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %><% if (boardCategory[i].id == queryCategory) { %>
+                              <li role="presentation" class="active"><a href="/board/sheet/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } else { %>
+                              <li role="presentation"><a href="/board/sheet/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } %><% } %>
                          </ul>
                     </div>
                     <div class="col-sm-10">
@@ -92,7 +93,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                         <div class="row">
                                              <div class="col-sm-1 sheet-id"><%= boardData[i].a_id %></div>
                                              <div class="col-sm-2 sheet-img">
-                                                  <img src="http://via.placeholder.com/140x100" class="img-thumbnail" alt="">
+                                                  <img src="<%= boardData[i].a_thumurl %>" class="img-thumbnail" alt="">
                                              </div>
                                              <div class="col-sm-6 sheet-body">
                                                   <h4><%= boardData[i].a_title %> <small><label class="label label-info"><%= boardData[i].c_name %></label></small></h4>
@@ -114,7 +115,13 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                               <div class="sheet-bottom-right">
                                    <a class="btn btn-primary" href="/board/sheet/write" role="button">글쓰기</a>
                               </div>
-
+                              <div class="sheet-search">
+                                   <form name="board-search" action="/board/sheet/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                        <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
+                                        <input type="text" id="search" name="search" value="" placeholder="제목 기준">
+                                        <input type="submit" class="btn btn-default" value="검색">
+                                   </form>
+                              </div>
                               <div class="sheet-pagination">
                                    <nav aria-label="Page navigation">
                                         <ul class="pagination">
@@ -138,14 +145,6 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                </div>
           </div>
 
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="../../../js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-          <!-- Common -->
-          <script src="../../../js/common.js"></script>
+<% include _foot %>
      </body>
 </html>

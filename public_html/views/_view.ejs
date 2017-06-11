@@ -153,21 +153,15 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
                          <div class="view-bottom">
                               <a class="btn btn-default" href="/board/<%= bid %>/list" role="button">목록</a>
-                              <div class="view-bottom-right">
+                              <div class="view-bottom-right"><% if (boardData[0].a_user == loginUser) { %>
                                    <a class="btn btn-danger" href="/board/<%= bid %>/delete/<%= boardData[0].a_id %>" role="button">삭제</a>
                                    <a class="btn btn-primary" href="/board/<%= bid %>/modify/<%= boardData[0].a_id %>" role="button">수정</a>
-                              </div>
+                              </div><% } %>
                          </div>
                     </div>
                </div>
           </div>
 
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="../../../js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<% include _foot %>
      </body>
 </html>

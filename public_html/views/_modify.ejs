@@ -97,7 +97,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
 
           <div class="container">
                <div class="row">
-                    <form class="form-horizontal" action="/board/<%= bid %>/modifyok/<%= boardData[0].a_id %>" method="post">
+                    <form class="form-horizontal modify-form" action="/board/<%= bid %>/modifyok/<%= boardData[0].a_id %>" method="post">
 <% if (bid == "sheet" || bid == "play") { %>
                          <div class="form-group">
                               <label class="col-sm-2 control-label">카테고리</label>
@@ -134,6 +134,9 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          <div class="form-group">
                               <div class="col-sm-offset-2 col-sm-10">
                                    <input type="hidden" id="modifyInpBid" name="modifyInpBid" value="<%= bid %>" />
+<% if (bid == "sheet") { %>
+                                   <input type="hidden" id="modifyInpImg" name="modifyInpImg" value="<%= boardData[0].a_thumurl %>" />
+<% } %>
                                    <input type="button" class="btn btn-default" onclick="submitContents(this);" value="수정" />
                               </div>
                          </div>
@@ -151,9 +154,19 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                function submitContents(elClickedObj) {
                     var editor = CKEDITOR.instances.modifyInpContent
                       , editor_Data = editor.getData();
+
+                    if (($("#modifyInpTitle").text()).length < 1) {
+                         alert("제목을 입력해주세요!");
+                         return;
+                    }
                     if (editor_Data.length < 1) {
                          alert("내용을 입력해주세요!");
                          return;
+                    }
+
+                    var getImg = $(editor_Data).find("img")[0];
+                    if ((getImg != undefined) && ($("#modifyInpImg").length > 0)) {
+                         $("#modifyInpImg").val(getImg.getAttribute("src"));
                     }
 
                     try {
@@ -161,12 +174,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                     } catch (e) {}
                }
           </script>
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="../../../js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+          
+<% include _foot %>
      </body>
 </html>

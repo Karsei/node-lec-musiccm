@@ -65,8 +65,11 @@
                          </div>
 
                          <div class="mentor-search">
-                              <input type="text" id="inp_mentorSearch" name="inp_mentorSearch" value="">
-                              <button type="button" class="btn btn-default" name="button">검색</button>
+                              <form name="board-search" method="get" onsubmit="Board_Search(this); return false;">
+                                   <input type="hidden" id="InpBoardBid" name="InpBoardBid" value="mentor">
+                                   <input type="text" id="InpBoardSearch" name="InpBoardSearch" value="" placeholder="제목 기준">
+                                   <input type="submit" id="btnBoardSearch" name="btnBoardSearch" class="btn btn-default" value="검색">
+                              </form>
                          </div>
                          <div class="mentor-pagination">
                               <nav aria-label="Page navigation">
@@ -91,14 +94,6 @@
                </div>
           </div>
 
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="../../../js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-          <!-- Common -->
-          <script src="../../../js/common.js"></script>
+<% include _foot %>
      </body>
 </html>

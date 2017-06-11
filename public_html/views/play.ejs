@@ -82,20 +82,25 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          <hr/>
                          <div class="well play-popular">
                               <h2>인기 게시물</h2>
-                              <ul>
-                                   <li>1</li>
-                                   <li>2</li>
-                                   <li>3</li>
-                                   <li>4</li>
-                                   <li>5</li>
-                              </ul>
+                              <div class="row"><% for (var i = 0; i < boardData.length; i++) { %><% if (i == 3) { break; } %>
+                                   <a href="/board/play/view/<%= boardData[i].a_id %>">
+                                        <div class="col-sm-4 play-article">
+                                             <p class="play-id"><%= boardData[i].a_id %></p>
+                                             <p class="play-img text-center"><img src="<%= boardData[i].a_youtubethum %>" class="img-thumbnail" alt=""></p>
+                                             <h4 class="play-title"><%= boardData[i].a_title %> <small><label class="label label-info"><%= boardData[i].c_name %></label></small></h4>
+                                             <p class="play-nickname"><%= boardData[i].u_nickname %><br><span class="play-date"><%= (new Date(boardData[i].a_date)).format("yyyy/MM/dd HH:mm:ss") %></span></p>
+                                             <p class="play-content"><%- _trimDotString(striptags(boardData[i].a_content), 50) %></p>
+                                        </div><% } %>
+                                   </a>
+                              </div>
                          </div>
                          <hr/>
                     <div/>
 
                     <div class="col-sm-2">
-                         <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %>
-                              <li role="presentation"><a href="/board/play/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } %>
+                         <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %><% if (boardCategory[i].id == queryCategory) { %>
+                              <li role="presentation" class="active"><a href="/board/play/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } else { %>
+                              <li role="presentation"><a href="/board/play/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } %><% } %>
                          </ul>
                     </div>
                     <div class="col-sm-10">
@@ -116,7 +121,13 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                               <div class="play-bottom-right">
                                    <a class="btn btn-primary" href="/board/play/write" role="button">글쓰기</a>
                               </div>
-
+                              <div class="play-search">
+                                   <form name="board-search" action="/board/play/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                        <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
+                                        <input type="text" id="search" name="search" value="" placeholder="제목 기준">
+                                        <input type="submit" class="btn btn-default" value="검색">
+                                   </form>
+                              </div>
                               <div class="play-pagination">
                                    <nav aria-label="Page navigation">
                                         <ul class="pagination">
@@ -140,14 +151,6 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                </div>
           </div>
 
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="../../../js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-          <!-- Common -->
-          <script src="../../../js/common.js"></script>
+<% include _foot %>
      </body>
 </html>

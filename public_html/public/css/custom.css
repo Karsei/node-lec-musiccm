@@ -1,8 +1,7 @@
 /**
 Music Community for Web Programming
 
-Written. 2017-04-14
-Last Updated. 2017-04-14
+First Written. 2017-04-14
 **/
 
 /*****************************************************
@@ -11,7 +10,7 @@ Last Updated. 2017-04-14
  *
 ******************************************************/
 body {
-     padding-top: 70px;
+     padding-top: 50px;
      overflow-x: hidden;
 }
 
@@ -43,20 +42,20 @@ table > thead > tr > th {
 ****************************************/
 @media screen and (max-width: 1199px) {
      body {
-          padding-top: 70px;
+          padding-top: 50px;
      }
 }
 
 @media screen and (max-width: 991px) {
      body {
-          padding-top: 118px;
+          padding-top: 100px;
      }
 }
 
 /** For Smartphone **/
 @media screen and (max-width: 767px) {
      body {
-          padding-top: 70px;
+          padding-top: 50px;
      }
 
      /********************************************
@@ -101,11 +100,40 @@ table > thead > tr > th {
 
 /*****************************************************
  *
+ * [Index]
+ *
+******************************************************/
+.slide-nav {
+     position: absolute;
+}
+.slide-nav div, .slide-nav div:hover, .slide-nav .av {
+     position: absolute;
+     /* size of bullet element */
+     width: 16px;
+     height: 16px;
+     background: url('../img/b05.png') no-repeat;
+     overflow: hidden;
+     cursor: pointer;
+}
+.slide-nav div { background-position: -7px -7px; }
+.slide-nav div:hover, .slide-nav .av:hover { background-position: -37px -7px; }
+.slide-nav .av { background-position: -67px -7px; }
+.slide-nav .dn, .slide-nav .dn:hover { background-position: -97px -7px; }
+
+.slide-arrow {display:block;position:absolute;cursor:pointer;}
+.slide-arrow .a {fill:#fff;}
+.slide-arrow:hover {opacity:.8;}
+.slide-arrow.jssora031dn {opacity:.5;}
+.slide-arrow.jssora031ds { opacity: .3; pointer-events: none; }
+
+/*****************************************************
+ *
  * [Mentor Board]
  *
 ******************************************************/
 .mentor-bottom {
      position: relative;
+     margin-bottom: 20px;
 }
 .mentor-bottom .mentor-bottom-right {
      position: absolute;
@@ -131,7 +159,7 @@ table > thead > tr > th {
 .play-article {
      position: relative;
      padding: 20px;
-     min-height: 320px;
+     height: 320px;
      margin-bottom: 10px;
      border: 5px solid #fff;
      background-color: #eee;
@@ -149,6 +177,7 @@ table > thead > tr > th {
 
 .play-bottom {
      position: relative;
+     margin-bottom: 20px;
 }
 .play-bottom .play-bottom-right {
      position: absolute;
@@ -208,14 +237,17 @@ table > thead > tr > th {
 
 .sheet-bottom {
      position: relative;
+     margin-bottom: 20px;
 }
 .sheet-bottom .sheet-bottom-right {
      position: absolute;
      top: 0px;
      right: 0px;
 }
-
-.sheet-pagination {
+.sheet-bottom .sheet-search {
+     text-align: center;
+}
+.sheet-bottom .sheet-pagination {
      text-align: center;
 }
 
@@ -233,9 +265,49 @@ table > thead > tr > th {
 }
 .view-bottom {
      position: relative;
+     margin-bottom: 20px;
 }
 .view-bottom .view-bottom-right {
      position: absolute;
      top: 0px;
      right: 0px;
+}
+
+/*****************************************************
+ *
+ * [BOARD - write]
+ *
+******************************************************/
+.write-form {
+     margin-top: 20px;
+}
+
+/*****************************************************
+ *
+ * [BOARD - modify]
+ *
+******************************************************/
+.modify-form {
+     margin-top: 20px;
+}
+
+/*****************************************************
+ *
+ * [BOARD - delete]
+ *
+******************************************************/
+.delete-form {
+     margin-top: 20px;
+}
+
+/*****************************************************
+ *
+ * [Mypage]
+ *
+******************************************************/
+.mypage-box {
+     margin-top: 20px;
+}
+.mypage-form {
+     margin-top: 20px;
 }

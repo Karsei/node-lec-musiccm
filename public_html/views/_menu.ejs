@@ -30,7 +30,8 @@
                               </li>
                          </ul>
                          <form class="navbar-form navbar-right">
-                              <input type="text" name="form-control" placeholder="검색...">
+                              <input type="text" id="search" name="search" class="form-control" placeholder="검색어를 입력하세요">
+                              <input type="submit" class="form-control" value="검색">
                          </form>
                     </div>
                </div>
@@ -47,21 +48,21 @@
                               <p>지금 바로 로그인해서<br>더 많은 음악들을 즐겨보세요!</p>
                               <form class="form-horizontal" method="post">
                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">이메일</label>
+                                        <label for="signInpEmail" class="col-sm-2 control-label">이메일</label>
                                         <div class="col-sm-7">
-                                             <input type="email" class="form-control" id="sign-inp-email" name="sign-inp-email" placeholder="이메일을 입력하세요.">
+                                             <input type="email" class="form-control" id="signInpEmail" name="signInpEmail" placeholder="이메일을 입력하세요." required>
                                         </div>
                                         <div class="col-sm-3">
-                                             <button type="button" class="btn btn-default btn-width100 fill-lemon" name="button">로그인</button>
+                                             <input type="button" class="btn btn-default btn-width100 fill-lemon" onclick="btnMenuSignin(this);" value="로그인" name="button">
                                         </div>
                                    </div>
                                    <div class="form-group">
-                                        <label for="" class="col-sm-2 control-label">비밀번호</label>
+                                        <label for="signInpPassword" class="col-sm-2 control-label">비밀번호</label>
                                         <div class="col-sm-7">
-                                             <input type="password" class="form-control" id="sign-inp-password" name="sign-inp-password" placeholder="비밀번호를 입력하세요.">
+                                             <input type="password" class="form-control" id="signInpPassword" name="signInpPassword" placeholder="비밀번호를 입력하세요." required>
                                         </div>
                                         <div class="col-sm-3">
-                                             <button type="button" class="btn btn-default btn-width100 fill-gray" name="button">이렇게 가입</button>
+                                             <input type="button" class="btn btn-default btn-width100 fill-gray" onclick="btnMenuSignUp(this);" value="이렇게 가입" name="button">
                                         </div>
                                    </div>
                               </form>

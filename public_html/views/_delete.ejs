@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Music Community</title>
+
+          <!-- Bootstrap CSS -->
+          <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+
+          <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+          <![endif]-->
+
+          <!-- Custom Fix -->
+          <link rel="stylesheet" type="text/css" href="../../../css/custom.css">
+     </head>
+
+     <body>
+<% if (!loginState) { %>
+          <script type="text/javascript">
+               alert("로그인을 하셔야 합니다!");
+               history.back();
+          </script>
+<% } %>
+<% include _menu %>
+          <!--nav class="navbar navbar-default navbar-fixed-top">
+               <div class="container">
+                    <div class="navbar-header">
+                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                              <span class="sr-only">Toggle navigation</span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                         </button>
+                         <a class="navbar-brand" href="#">음악의 대명사</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                         <ul class="nav navbar-nav">
+                              <li class=""><a href="/index">홈</a></li>
+                              <li class=""><a href="/about">소개</a></li>
+                              <li class="active dropdown">
+                                   <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">커뮤니티<span class="caret"></span></a>
+                                   <ul class="dropdown-menu">
+                                        <li class="active"><a href="/play">연주 게시판</a></li>
+                                        <li class=""><a href="/mentor">멘토 게시판</a></li>
+                                        <li class=""><a href="/sheet">악보 게시판</a></li>
+                                   </ul>
+                              </li>
+                         </ul>
+
+                         <ul class="nav navbar-nav navbar-right">
+                              <li class="">
+                                   <a href="/mypage"><span class="glyphicon glyphicon-user"></span>내 정보</a>
+                              </li>
+                              <li class="">
+                                   <a href="/login"><span class="glyphicon glyphicon-off"></span>로그인</a>
+                              </li>
+                         </ul>
+                         <form class="navbar-form navbar-right">
+                              <input type="text" name="form-control" placeholder="검색...">
+                         </form>
+                    </div>
+               </div>
+          </nav-->
+
+          <div class="container">
+               <div class="row">
+                    <div class="col-sm-12">
+                         <form class="well delete-form" action="/board/<%= bid %>/deleteok/<%= boardData[0].a_id %>" method="post">
+                              <h3 class="text-center">정말로 삭제하시겠습니까?</h3>
+                              <h4 class="text-center">삭제한 글은 되돌릴 수 없습니다.</h4>
+                              <p class="text-center"><mark><%= boardData[0].a_title %></mark></p>
+                              <p class="text-center">
+                                   <input type="hidden" id="deleteInpId" name="deleteInpId" value="<%= boardData[0].a_id %>">
+                                   <input type="hidden" id="deleteInpBid" name="deleteInpBid" value="<%= bid %>" />
+                                   <input type="button" class="btn btn-default" id="deleteInpNo" name="deleteInpNo" onclick="history.back();" value="아니오">
+                                   <input type="button" class="btn btn-danger" id="deleteInpYes" name="deleteInpYes" onclick="submitContents(this);" value="예">
+                              </p>
+                         </form>
+                    </div>
+               </div>
+          </div>
+
+          <script type="text/javascript">
+               function submitContents(elClickedObj) {
+                    try {
+                         elClickedObj.form.submit();
+                    } catch (e) {}
+               }
+          </script>
+
+<% include _foot %>
+     </body>
+</html>

@@ -47,7 +47,7 @@
                               <li class="active">
                                    <a href="/mypage"><span class="glyphicon glyphicon-user"></span>내 정보</a>
                               </li>
-                              <li class=""><% if (!loginState) { %>
+                              <li class=""><% if (loginState == undefined) { %>
                                    <a href="/auth/login/naver"><span class="glyphicon glyphicon-off"></span>로그인</a><% } else { %>
                                    <a href="/logout"><span class="glyphicon glyphicon-off"></span>로그아웃</a><% } %>
                               </li>
@@ -58,53 +58,64 @@
                     </div>
                </div>
           </nav>
-          <div class="container">
+
+          <div class="container mypage-box">
                <div class="row">
                     <div class="col-sm-2">
-                         <ul class="nav nav-pills nav-stacked">
-                              <li role="presentation" class="active"><a href="#">개요</a></li>
-                              <li role="presentation"><a href="#">기본 설정</a></li>
+                         <ul class="nav nav-pills nav-stacked btnList">
+                              <li role="presentation" class="active"><a class="btnOverview" href="#">개요</a></li>
+                              <li role="presentation"><a class="btnSetting" href="#">설정</a></li>
                          </ul>
                     </div>
                     <div class="col-sm-10">
-                         <div class="row">
-                              <div class="col-sm-6">
-                                   <h3>내가 쓴 글</h3>
-                                   <p>글들...</p>
-                              </div>
-                              <div class="col-sm-6">
-                                   <h3>내가 쓴 댓글</h3>
-                                   <p>댓글들...</p>
-                              </div>
-                         </div>
-                         <div class="well">
-                              <%= loginState %>
-                         </div>
-                         <form class="form-horizontal" method="post">
-                              <div class="form-group">
-                                   <label for="inputId" class="col-sm-2 control-label">아이디</label>
-                                   <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputId" placeholder="ID">
+                         <div class="overview">
+                              <form class="form-horizontal mypage-form" method="post">
+                                   <div class="form-group">
+                                        <label for="inputId" class="col-sm-2 control-label">고유 ID</label>
+                                        <div class="col-sm-10">
+                                             <input type="email" id="inputId" class="form-control" value="<%= loginState.cmid %>" placeholder="CMID" disabled>
+                                        </div>
                                    </div>
-                              </div>
-                              <div class="form-group">
-                                   <label for="inputEmail" class="col-sm-2 control-label">이메일</label>
-                                   <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                   <div class="form-group">
+                                        <label for="inputaid" class="col-sm-2 control-label">아이디</label>
+                                        <div class="col-sm-10">
+                                             <input type="email" id="inputaid" class="form-control" value="<%= loginState.id %>" placeholder="AID" disabled>
+                                        </div>
                                    </div>
-                              </div>
-                         </form>
-
+                                   <div class="form-group">
+                                        <label for="inputEmail" class="col-sm-2 control-label">닉네임</label>
+                                        <div class="col-sm-10">
+                                             <input type="email" id="inputEmail" class="form-control" value="<%= loginState.displayName %>" placeholder="Nickname" disabled>
+                                        </div>
+                                   </div>
+                              </form>
+                         </div>
+                         <div class="setting">
+                              <form class="well">
+                              </form>
+                         </div>
                     </div>
                </div>
           </div>
 
-          <!-- jQuery -->
-          <script src="//code.jquery.com/jquery.js"></script>
-          <!-- Bootstrap JavaScript -->
-          <!--script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script-->
-          <script src="js/bootstrap.min.js"></script>
-          <!-- Tether -->
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<% include _foot %>
+
+          <script type="text/javascript">
+               $(".overview").show();
+               $(".setting").hide();
+
+               $(".btnOverview").click(function () {
+                    $(".overview").show();
+                    $(".setting").hide();
+                    $(".btnList > li")[0].setAttribute("class", "active");
+                    $(".btnList > li")[1].setAttribute("class", "");
+               });
+               $(".btnSetting").click(function () {
+                    $(".overview").hide();
+                    $(".setting").show();
+                    $(".btnList > li")[0].setAttribute("class", "");
+                    $(".btnList > li")[1].setAttribute("class", "active");
+               });
+          </script>
      </body>
 </html>
