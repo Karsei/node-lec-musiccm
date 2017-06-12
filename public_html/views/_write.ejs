@@ -127,7 +127,7 @@
                     var editor = CKEDITOR.instances.writeInpContent
                       , editor_Data = editor.getData();
 
-                    if (($("#writeInpTitle").text()).length < 1) {
+                    if (E("writeInpTitle").value.length < 1) {
                          alert("제목을 입력해주세요!");
                          return;
                     }

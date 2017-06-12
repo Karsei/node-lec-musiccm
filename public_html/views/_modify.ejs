@@ -155,7 +155,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                     var editor = CKEDITOR.instances.modifyInpContent
                       , editor_Data = editor.getData();
 
-                    if (($("#modifyInpTitle").text()).length < 1) {
+                    if (E("modifyInpTitle").value.length < 1) {
                          alert("제목을 입력해주세요!");
                          return;
                     }
@@ -174,7 +174,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                     } catch (e) {}
                }
           </script>
-          
+
 <% include _foot %>
      </body>
 </html>
