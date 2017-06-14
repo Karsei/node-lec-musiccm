@@ -132,8 +132,8 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                                        <span aria-hidden="true">&laquo;</span>
                                                   </a>
                                              </li><% for (var idx = boardPaging.PAGE_START; idx <= boardPaging.PAGE_END; idx++) { %><% if (idx != boardPaging.PAGE_CURRENT) { %>
-                                             <li><a href="#"><%= idx %></a></li><% } else { %>
-                                             <li class="active"><a href="#"><%= idx %></a></li><% } %><% } %>
+                                             <li><a href="/board/sheet/list/<%= idx %>"><%= idx %></a></li><% } else { %>
+                                             <li class="active"><a href="/board/sheet/list/<%= idx %>"><%= idx %></a></li><% } %><% } %>
                                              <li>
                                                   <a href="/board/sheet/list/<%= boardPaging.PAGE_END %>" aria-label="Next">
                                                        <span aria-hidden="true">&raquo;</span>

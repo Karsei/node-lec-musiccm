@@ -108,7 +108,7 @@ router.get('/:bid/list/:number', function(req, res, next) {
 
      // 게시판 목록
      var board_Paging = {
-          SHOW_COUNT: 10,
+          SHOW_COUNT: 9,
           PAGE_CURRENT: parseInt(req.params.number),
           PAGE_START: 0,
           PAGE_END: 0,
@@ -167,20 +167,20 @@ router.get('/:bid/list/:number', function(req, res, next) {
                                                   board_Paging.PAGE_CURRENT = board_Paging.TOTAL_PAGE;
                                              }
                                              // 시작과 끝 페이지 계산
-                                             board_Paging.PAGE_START = ((board_Paging.PAGE_CURRENT - 1) / board_Paging.SHOW_COUNT) * board_Paging.SHOW_COUNT + 1;
+                                             board_Paging.PAGE_START = Math.floor((board_Paging.PAGE_CURRENT - 1) / board_Paging.SHOW_COUNT) * board_Paging.SHOW_COUNT + 1;
                                              board_Paging.PAGE_END = board_Paging.PAGE_START + board_Paging.SHOW_COUNT - 1;
                                              // 끝 페이지 보정
                                              if (board_Paging.PAGE_END > board_Paging.TOTAL_PAGE) {
                                                   board_Paging.PAGE_END = board_Paging.TOTAL_PAGE;
                                              }
-                                             /*
+
                                              console.log("TOTAL_ROW: " + board_Paging.TOTAL_ROW);
                                              console.log("SHOW_COUNT: " + board_Paging.SHOW_COUNT);
                                              console.log("PAGE_CURRENT: " + board_Paging.PAGE_CURRENT);
                                              console.log("TOTAL_PAGE: " + board_Paging.TOTAL_PAGE);
                                              console.log("PAGE_START: " + board_Paging.PAGE_START);
                                              console.log("PAGE_END: " + board_Paging.PAGE_END);
-                                             */
+
                                              // 게시판 목록 가져오기
                                              q = "SELECT " + getSelectQuery(req.params.bid) + " " +
                                                  "FROM " + brdid + " AS BOARD, " + cateid + " AS CATE, mc_users AS USERLIST " +
@@ -189,7 +189,8 @@ router.get('/:bid/list/:number', function(req, res, next) {
                                                  ((url_query.category != undefined) ? ((url_query.category != "1") ? "AND (BOARD.category = " + url_query.category + ") " : " ") : " ") +
                                                  ((url_query.search != undefined) ? "AND (BOARD.title LIKE '%" + url_query.search + "%') " : " ") +
                                                  "ORDER BY BOARD.id DESC " +
-                                                 "LIMIT " + (board_Paging.PAGE_START - 1) + ", " + (board_Paging.PAGE_START + board_Paging.SHOW_COUNT - 1) + ";";
+                                                 "LIMIT " + ((board_Paging.PAGE_CURRENT - 1) * board_Paging.SHOW_COUNT) + ", " + board_Paging.SHOW_COUNT + ";";
+                                             console.log(q);
                                              connection.query(q, function (bderr, bdrows) {
                                                   if (bderr)  console.error("Error: " + bderr);
                                                   //console.log("(Board Data) rows: " + JSON.stringify(bdrows));
@@ -250,34 +251,73 @@ router.get('/:bid/list/:number', function(req, res, next) {
                                    }
 
                                    // 게시판 목록 가져오기
-                                   q = "SELECT " + getSelectQuery(req.params.bid) + " " +
-                                       "FROM " + brdid + " AS BOARD, mc_users AS USERLIST " +
-                                       "WHERE (BOARD.user = USERLIST.id) " +
-                                       ((url_query.search != undefined) ? "AND (BOARD.title LIKE '%" + url_query.search + "%') " : " ") +
-                                       "ORDER BY BOARD.id DESC " +
-                                       "LIMIT " + (board_Paging.PAGE_START - 1) + ", " + (board_Paging.PAGE_START + board_Paging.SHOW_COUNT - 1) + ";";
-                                   connection.query(q, function (bcerr, bcrows) {
-                                        if (bcerr)  console.error("Error: " + bcerr);
-                                        //console.log("(Board Data) rows: " + JSON.stringify(bcrows));
+                                   switch (req.params.bid) {
+                                        case "mentor":
+                                             q = "SELECT " + getSelectQuery(req.params.bid) + " " +
+                                                 "FROM " + brdid + " AS BOARD, mc_users AS USERLIST " +
+                                                 "WHERE (BOARD.user = USERLIST.id) " +
+                                                 ((url_query.search != undefined) ? "AND (BOARD.title LIKE '%" + url_query.search + "%') " : " ") +
+                                                 "AND (BOARD.atype = 0) " +
+                                                 "ORDER BY BOARD.replyid ASC, BOARD.adate ASC, BOARD.id DESC " +
+                                                 "LIMIT " + ((board_Paging.PAGE_CURRENT - 1) * board_Paging.SHOW_COUNT) + ", " + board_Paging.SHOW_COUNT + ";";
+                                             connection.query(q, function (bcerr, bcrows) {
+                                                  if (bcerr)  console.error("Error: " + bcerr);
+                                                  //console.log("(Board Data) rows: " + JSON.stringify(bcrows));
 
-                                        // 로그인 상태 파악 후 메뉴 구성
-                                        var loginstate = common.getUserState(req);
-                                        common.activeMenu(menus, req.params.bid);
+                                                  // 로그인 상태 파악 후 메뉴 구성
+                                                  var loginstate = common.getUserState(req);
+                                                  common.activeMenu(menus, req.params.bid);
 
-                                        // 페이지 출력
-                                        res.render(req.params.bid, {
-                                             title: basic.HOMEPAGE_TITLE,
-                                             bUrl: basic.HOMEPAGE_URL,
-                                             menudata: menus,
-                                             loginState: loginstate,
-                                             boardInfo: binforows[0],
-                                             boardData: board_data,
-                                             boardPaging: board_Paging,
-                                             striptags: striptags
-                                        });
+                                                  board_data = bcrows;
 
-                                        connection.release();
-                                   });
+                                                  // 페이지 출력
+                                                  res.render(req.params.bid, {
+                                                       title: basic.HOMEPAGE_TITLE,
+                                                       bUrl: basic.HOMEPAGE_URL,
+                                                       menudata: menus,
+                                                       loginState: loginstate,
+                                                       boardInfo: binforows[0],
+                                                       boardData: board_data,
+                                                       boardPaging: board_Paging,
+                                                       striptags: striptags
+                                                  });
+
+                                                  connection.release();
+                                             });
+                                             break;
+                                        case "notice":
+                                             q = "SELECT " + getSelectQuery(req.params.bid) + " " +
+                                                 "FROM " + brdid + " AS BOARD, mc_users AS USERLIST " +
+                                                 "WHERE (BOARD.user = USERLIST.id) " +
+                                                 ((url_query.search != undefined) ? "AND (BOARD.title LIKE '%" + url_query.search + "%') " : " ") +
+                                                 "ORDER BY BOARD.id DESC " +
+                                                 "LIMIT " + ((board_Paging.PAGE_CURRENT - 1) * board_Paging.SHOW_COUNT) + ", " + board_Paging.SHOW_COUNT + ";";
+                                             connection.query(q, function (bcerr, bcrows) {
+                                                  if (bcerr)  console.error("Error: " + bcerr);
+                                                  //console.log("(Board Data) rows: " + JSON.stringify(bcrows));
+
+                                                  // 로그인 상태 파악 후 메뉴 구성
+                                                  var loginstate = common.getUserState(req);
+                                                  common.activeMenu(menus, req.params.bid);
+
+                                                  board_data = bcrows;
+
+                                                  // 페이지 출력
+                                                  res.render(req.params.bid, {
+                                                       title: basic.HOMEPAGE_TITLE,
+                                                       bUrl: basic.HOMEPAGE_URL,
+                                                       menudata: menus,
+                                                       loginState: loginstate,
+                                                       boardInfo: binforows[0],
+                                                       boardData: board_data,
+                                                       boardPaging: board_Paging,
+                                                       striptags: striptags
+                                                  });
+
+                                                  connection.release();
+                                             });
+                                             break;
+                                   }
                               });
                          }
                     }
@@ -361,7 +401,9 @@ router.post('/:bid/writeok', function(req, res, next) {
                               id: YoutubeAPI.getVideoId(req.body.writeYoutubeURL)
                          };
                          YoutubeAPI.getVideosList(function (data) {
-                              q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `youtubeid`, `youtubethum`, `content`, `category`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + YoutubeAPI.getVideoId(req.body.writeYoutubeURL) + "', '" + data.items[0].snippet.thumbnails.default.url + "', '" + req.body.writeInpContent + "', '" + req.body.writeInpCate + "');";
+                              q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `youtubeid`, `youtubethum`, `content`, `category`) VALUES ('" +
+                                  req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + YoutubeAPI.getVideoId(req.body.writeYoutubeURL) + "', '" + data.items[0].snippet.thumbnails.default.url + "', '" + req.body.writeInpContent + "', '" + req.body.writeInpCate + "');";
+                              console.log(q);
                               connection.query(q, function (cgerr, cgrows) {
                                    if (cgerr)  console.error("Error: " + cgerr);
                                    // 연결 해제
@@ -384,15 +426,37 @@ router.post('/:bid/writeok', function(req, res, next) {
                     });
                break;
                case "mentor":
-                    q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`) VALUES ('" + req.user.cmid + "', '" + req.body.writeInpTitle + "', '" + req.body.writeInpContent + "');";
-                    connection.query(q, function (cgerr, cgrows) {
-                         if (cgerr)  console.error("Error: " + cgerr);
+                    if (req.body.mentorInpType == "question") {
+                         q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`, `atype`) VALUES ('" + req.user.cmid + "', '" + req.body.mentorInpContent + "', '" + req.body.mentorInpContent + "', '0');";
+                         connection.query(q, function (cgerr, cgrows) {
+                              if (cgerr)  console.error("Error: " + cgerr);
 
-                         // 연결 해제
-                         connection.release();
-                         // 원래 목록으로 되돌아감
-                         res.redirect('/board/' + req.params.bid + '/list/1');
-                    });
+                              // 연결 해제
+                              connection.release();
+                              // 원래 목록으로 되돌아감
+                              res.redirect('/board/' + req.params.bid + '/list/1');
+                         });
+                    } else if (req.body.mentorInpType == "answer") {
+                         q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`, `atype`, `replyid`) VALUES ('" + req.user.cmid + "', '" + req.body.mentorInpAnsContent + "', '" + req.body.mentorInpAnsContent + "', '1', '" + req.body.mentorInpId + "');";
+                         connection.query(q, function (cgerr, cgrows) {
+                              if (cgerr)  console.error("Error: " + cgerr);
+
+                              // 연결 해제
+                              connection.release();
+                              // 원래 목록으로 되돌아감
+                              res.redirect('/board/' + req.params.bid + '/list/1');
+                         });
+                    } else if (req.body.mentorInpType == "reply") {
+                         q = "INSERT INTO musiccm." + brdid + "(`user`, `title`, `content`, `atype`, `replyid`) VALUES ('" + req.user.cmid + "', '" + req.body.mentorInpReplyContent + "', '" + req.body.mentorInpReplyContent + "', '1', '" + req.body.mentorInpId + "');";
+                         connection.query(q, function (cgerr, cgrows) {
+                              if (cgerr)  console.error("Error: " + cgerr);
+
+                              // 연결 해제
+                              connection.release();
+                              // 원래 목록으로 되돌아감
+                              res.redirect('/board/' + req.params.bid + '/list/1');
+                         });
+                    }
                break;
           }
      });
@@ -430,7 +494,7 @@ router.get('/:bid/view/:number', function(req, res, next) {
                                   "WHERE (BOARD.category = CATE.id) AND (USERLIST.id = BOARD.user) AND (BOARD.id = " + req.params.number + ") ";
                               connection.query(q, function (aerr, arows) {
                                    if (aerr)  console.error("Error: " + aerr);
-                                   console.log("(Board View) rows: " + JSON.stringify(cgrows));
+                                   //console.log("(Board View) rows: " + JSON.stringify(cgrows));
 
                                    board_data = arows;
 
@@ -464,24 +528,36 @@ router.get('/:bid/view/:number', function(req, res, next) {
                               });
                          });
                     } else {
-                         // 로그인 상태 파악 후 메뉴 구성
-                         var loginstate = common.getUserState(req);
-                         common.activeMenu(menus, req.params.bid);
+                         // 게시판 목록 가져오기
+                         q = "SELECT " + getSelectQuery(req.params.bid) + " " +
+                             "FROM " + brdid + " AS BOARD, mc_users AS USERLIST " +
+                             "WHERE (USERLIST.id = BOARD.user) AND (BOARD.id = " + req.params.number + ") ";
+                         connection.query(q, function (aerr, arows) {
+                              if (aerr)  console.error("Error: " + aerr);
+                              //console.log("(Board View) rows: " + JSON.stringify(arows));
 
-                         // 페이지 출력
-                         res.render('_view', {
-                              title: basic.HOMEPAGE_TITLE,
-                              bUrl: basic.HOMEPAGE_URL,
-                              menudata: menus,
-                              loginState: loginstate,
-                              loginUser: req.user.cmid,
-                              bid: req.params.bid,
-                              boardInfo: binforows[0],
-                              boardCategory: board_category
+                              board_data = arows;
+
+                              // 로그인 상태 파악 후 메뉴 구성
+                              var loginstate = common.getUserState(req);
+                              common.activeMenu(menus, req.params.bid);
+
+                              // 페이지 출력
+                              res.render('_view', {
+                                   title: basic.HOMEPAGE_TITLE,
+                                   bUrl: basic.HOMEPAGE_URL,
+                                   menudata: menus,
+                                   loginState: loginstate,
+                                   loginUser: (req.user != undefined) ? req.user.cmid : 0,
+                                   bid: req.params.bid,
+                                   boardInfo: binforows[0],
+                                   boardCategory: board_category,
+                                   boardData: board_data
+                              });
+
+                              // 연결 해제
+                              connection.release();
                          });
-
-                         // 연결 해제
-                         connection.release();
                     }
                }
           });
@@ -759,6 +835,44 @@ router.post('/:bid/deleteok/:number', function(req, res, next) {
 });
 
 /* POST Board - Keyword */
+router.post('/getList', function(req, res, next) {
+     if (req.body.query) {
+          switch (req.body.query) {
+               case "getIdList":
+                    sqlPool.getConnection(function (err, connection) {
+                         var q;
+                         q = "SELECT " + getSelectQuery(req.body.bid) + " FROM musiccm." + req.body.brdid + " AS BOARD, musiccm.mc_users AS USERLIST " +
+                             "WHERE (USERLIST.id = BOARD.user) " +
+                             "ORDER BY BOARD.id DESC " +
+                             "LIMIT " + req.body.startlist + "," + req.body.endlist + ";";
+                         connection.query(q, function (searcherr, searchrows) {
+                              if (searcherr)  console.error("Error: " + searcherr);
+                              // 연결 해제
+                              connection.release();
+                              res.send(JSON.stringify(searchrows));
+                         });
+                    });
+               break;
+               case "getViewList":
+                    sqlPool.getConnection(function (err, connection) {
+                         var q;
+                         q = "SELECT " + getSelectQuery(req.body.bid) + " FROM musiccm." + req.body.brdid + " AS BOARD, musiccm.mc_users AS USERLIST " +
+                             "WHERE (USERLIST.id = BOARD.user) " +
+                             "ORDER BY BOARD.view DESC " +
+                             "LIMIT " + req.body.startlist + "," + req.body.endlist + ";";
+                         connection.query(q, function (searcherr, searchrows) {
+                              if (searcherr)  console.error("Error: " + searcherr);
+                              // 연결 해제
+                              connection.release();
+                              res.send(JSON.stringify(searchrows));
+                         });
+                    });
+               break;
+          }
+     }
+});
+
+/* POST Board - Keyword */
 router.post('/keyword', function(req, res, next) {
      if (req.body.query) {
           switch (req.body.query) {
@@ -779,13 +893,45 @@ router.post('/keyword', function(req, res, next) {
      }
 });
 
+/* POST Board - Mentor-Reply */
+router.post('/mentorreply', function(req, res, next) {
+     if (req.body.query) {
+          switch (req.body.query) {
+               case "getReply":
+                    sqlPool.getConnection(function (err, connection) {
+                         var q;
+                         q = "SELECT " + getSelectQuery("mentor") + " FROM musiccm.mc_mentorboard AS BOARD, musiccm.mc_users AS USERLIST " +
+                             "WHERE (BOARD.user = USERLIST.id) AND (replyid = '" + req.body.a_id + "')" +
+                             "ORDER BY adate ASC;";
+                         connection.query(q, function (searcherr, searchrows) {
+                              if (searcherr)  console.error("Error: " + searcherr);
+                              // 연결 해제
+                              connection.release();
+                              res.send(JSON.stringify(searchrows));
+                         });
+                    });
+               break;
+          }
+     }
+});
+
 function getSelectQuery(bid) {
      switch (bid) {
           case "sheet":
                return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, BOARD.like AS a_like, BOARD.heart AS a_heart, BOARD.category AS a_category, BOARD.thumurl AS a_thumurl, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname, CATE.name AS c_name";
-          break;
+               break;
           case "play":
                return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, BOARD.category AS a_category, BOARD.youtubeid AS a_youtubeid, BOARD.youtubethum AS a_youtubethum, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname, CATE.name AS c_name";
+               break;
+          case "play_nocate":
+               return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, BOARD.youtubeid AS a_youtubeid, BOARD.youtubethum AS a_youtubethum, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname";
+               break;
+          case "mentor":
+               return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.atype AS a_type, BOARD.replyid AS a_replyid, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname";
+               break;
+          case "notice":
+               return "BOARD.id AS a_id, BOARD.user AS a_user, BOARD.title AS a_title, BOARD.content AS a_content, BOARD.adate AS a_date, BOARD.view AS a_view, USERLIST.id AS u_id, USERLIST.aid AS u_aid, USERLIST.nickname AS u_nickname";
+               break;
           default:
                return "*";
           break;
@@ -810,12 +956,16 @@ function getBoardId(bid) {
      switch (bid) {
           case "play":
                return "mc_playboard";
-          break;
+               break;
           case "sheet":
                return "mc_sheetboard";
-          break;
+               break;
           case "mentor":
                return "mc_mentorboard";
+               break;
+          case "notice":
+               return "mc_noticeboard";
+               break;
           default:
                return "";
           break;

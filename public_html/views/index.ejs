@@ -58,37 +58,14 @@
                          <h3><span class="glyphicon glyphicon-align-justify"></span> 공지사항</h3>
                          <hr>
                          <div class="index-notice">
-                              <ul>
-                                   <li><span class="glyphicon glyphicon-pushpin"></span>새로오신 분들은 읽어주세요.</li>
-                                   <li><span class="glyphicon glyphicon-pushpin"></span>'음악의 대명사' 홈페이지 개설</li>
+                              <ul class="index-notice-list">
                               </ul>
                          </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 index-topplay">
                          <h3><span class="glyphicon glyphicon-facetime-video"></span> 금주의 영상</h3>
                          <hr>
-                         <img src="http://placehold.it/560x350" class="img-thumbnail" alt="">
-                    </div>
-               </div>
-               <div class="row">
-                    <div class="col-sm-12">
-                         <h1>INDEX</h1>
-                         <h4>2017-06-11</h4>
-                         <ul>
-                              <li>수정된 사항 엄청 많음</li>
-                         </ul>
-                         <h4>2017-04-19</h4>
-                         <ul>
-                              <li>메뉴 구성</li>
-                              <li>로그인 세션</li>
-                              <li>샘플 게시판 구성</li>
-                              <li>디버깅을 위한 내 정보 페이지</li>
-                         </ul>
-                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac ex nec sem imperdiet viverra at consequat ipsum. Aenean id magna sit amet nisl rutrum sagittis a non arcu. Nullam at imperdiet est, non convallis nulla. Morbi iaculis felis turpis, eget viverra ante imperdiet in. Integer quis risus libero. Mauris scelerisque felis quis felis pretium sodales. Etiam libero neque, venenatis et diam nec, vehicula consectetur lectus. Aliquam justo mi, volutpat id porta non, tempor sit amet lacus. Sed blandit ut justo non eleifend. Sed a dui eleifend eros eleifend cursus in ut nulla. Mauris sed nisi lobortis, accumsan mauris sit amet, iaculis massa. Cras eget velit a turpis tristique congue nec non ipsum.</p>
-                         <p>Aliquam semper ultricies massa, vestibulum aliquam magna sollicitudin a. Quisque aliquet in enim sed ultrices. Curabitur nisi nibh, vehicula in porta ac, pharetra ut massa. Duis quis purus quis mauris iaculis auctor ac in nisi. Donec iaculis scelerisque orci sed consectetur. Aliquam fermentum eros eu lectus lobortis, sed volutpat sem venenatis. Integer id arcu libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
-                         <p>Curabitur elementum lorem ultrices dolor elementum, sit amet lacinia nisi consequat. Morbi vel tellus eu eros mattis iaculis. Aenean eu nulla fringilla, commodo felis non, fermentum mi. Vivamus gravida tellus tincidunt neque semper, eget dapibus ipsum pellentesque. Mauris nec mauris vel urna ultrices tristique. Ut a turpis aliquam, ultricies dolor sit amet, congue odio. Nam lacinia elit mi, et dignissim risus ullamcorper vitae. Sed hendrerit placerat accumsan. Fusce faucibus ac enim ultrices eleifend. Curabitur vestibulum et urna eu consequat.</p>
-                         <p>Phasellus lorem tortor, mollis at tellus non, cursus tristique massa. Quisque ligula lectus, vehicula at hendrerit quis, venenatis eget velit. Quisque cursus volutpat justo non fermentum. Curabitur commodo odio ut nunc tempor ultrices. Cras vitae velit aliquet, porta magna sed, facilisis risus. Suspendisse vitae molestie arcu. Nunc facilisis vel urna vel elementum. Vivamus vitae blandit enim, at iaculis nulla. Sed vel neque non mauris dictum feugiat. Morbi in ligula mollis, feugiat felis quis, consequat lectus. Fusce faucibus tempus mattis. Donec sed ligula at turpis vehicula porttitor. Curabitur odio nulla, blandit nec leo vitae, auctor finibus dolor. In maximus nisi vitae elit lacinia, eget iaculis ligula sollicitudin. In mauris nulla, commodo bibendum quam ut, iaculis sollicitudin nisi. Cras orci enim, scelerisque id felis eu, rutrum ornare magna.</p>
-                         <p>Morbi consectetur hendrerit ante. Donec luctus turpis vitae mauris mattis, sit amet finibus ligula dapibus. Maecenas commodo ultrices felis at fringilla. Vestibulum venenatis quam hendrerit, varius est ut, tristique tellus. Donec dictum diam nec metus scelerisque, convallis vulputate lectus ullamcorper. Maecenas tempus, tortor rhoncus blandit sagittis, lacus ligula euismod lorem, eu rutrum risus orci vel nunc. Duis blandit arcu dui, non rhoncus massa finibus ut. Vestibulum laoreet tristique lectus, in lobortis elit finibus eget. Nulla facilisi.</p>
+                         <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
                     </div>
                </div>
           </div>
@@ -137,6 +114,57 @@
                $(window).bind("load", ScaleSlider);
                $(window).bind("resize", ScaleSlider);
                $(window).bind("orientationchange", ScaleSlider);
+
+               // 공지사항
+               $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: API_BOARD_AJAX_URL + "getList",
+                    data: "query=" + "getIdList" +
+                          "&brdid=" + "mc_noticeboard" +
+                          "&startlist=" + "0" +
+                          "&endlist=" + "5" +
+                          "&bid=" + "notice"
+                    ,
+                    success: function (noticeList) {
+                         var $topplay_iframe = $(".index-notice-list");
+                         for (var i = 0; i < noticeList.length; i++) {
+                              var $li = $("<li>");
+                              $li
+                                   .append($("<a>", {
+                                        href: "board/notice/view/" + noticeList[i].a_id
+                                   })).children("a:last")
+                                   .append($("<span>", {
+                                        class: "glyphicon glyphicon-pushpin"
+                                   }))
+                                   .append($("<span>").text(noticeList[i].a_title));
+                              $topplay_iframe.append($li);
+                         }
+                    },
+                    error: function (req, status, err) {
+                         console.error("code: " + req.status + "\n" + req.responseText + "\n" + "error: " + err);
+                    }
+               });
+
+               // 금주의 영상
+               $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: API_BOARD_AJAX_URL + "getList",
+                    data: "query=" + "getViewList" +
+                          "&brdid=" + "mc_playboard" +
+                          "&startlist=" + "0" +
+                          "&endlist=" + "5" +
+                          "&bid=" + "play_nocate"
+                    ,
+                    success: function (playTopList) {
+                         var $topplay_iframe = $(".index-topplay iframe");
+                         $topplay_iframe.attr("src", "https://www.youtube.com/embed/" + playTopList[0].a_youtubeid);
+                    },
+                    error: function (req, status, err) {
+                         console.error("code: " + req.status + "\n" + req.responseText + "\n" + "error: " + err);
+                    }
+               });
           });
           </script>
      </body>

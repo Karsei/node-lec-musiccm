@@ -10,10 +10,18 @@ router.post('/upload', uploadSetting.single('upload'), function(req, res) {
      try {
           var tmpPath = req.file.path;
           var fileName = req.file.filename;
-          var newPath = "/home/karsei/musiccm/public_html/public/images/" + fileName;
+
+          var fileExtLastdot = req.file.originalname.lastIndexOf('.');
+          var fileExt = req.file.originalname.substring(fileExtLastdot, req.file.originalname.length);
+
+          var newPath = "/home/karsei/musiccm/public_html/public/images/" + fileName + fileExt;
+
+          console.log(req.file);
+          console.log("File (tmpPath): " + tmpPath);
+          console.log("FileName (fileName): " + fileName);
+          console.log("FileExt (Ext): " + fileExt);
 
           fs.rename(tmpPath, newPath, function (err) {
-               console.log(req.file);
                if (err) {
                     console.error(err);
                }
@@ -23,7 +31,7 @@ router.post('/upload', uploadSetting.single('upload'), function(req, res) {
                html = "";
                html += "<script type='text/javascript'>";
                html += "var funcNum = " + req.query.CKEditorFuncNum + ";";
-               html += "var url = \"/images/" + fileName + "\";";
+               html += "var url = \"/images/" + fileName + fileExt + "\";";
                html += "var message = \"업로드 완료\";";
                html += "window.parent.CKEDITOR.tools.callFunction(funcNum, url);";
                html += "</script>";

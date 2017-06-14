@@ -2,6 +2,7 @@ var commons = require('../config/common');
 var menus = require('../config/menu');
 var basic = require('../config/basic');
 var express = require('express');
+var url = require('url');
 
 var router = express.Router();
 var common = commons();
@@ -81,6 +82,19 @@ router.get('/mypage', function(req, res, next) {
           title: basic.HOMEPAGE_TITLE,
           bUrl: basic.HOMEPAGE_URL,
           loginState: req.user
+     });
+});
+/* GET - Search */
+router.get('/search', function(req, res, next) {
+     // GET 쿼리 가져오기
+     var url_parts = url.parse(req.url, true);
+     var url_query = url_parts.query;
+     
+     res.render('search', {
+          title: basic.HOMEPAGE_TITLE,
+          bUrl: basic.HOMEPAGE_URL,
+          loginState: req.user,
+          query: url_query
      });
 });
 

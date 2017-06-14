@@ -264,12 +264,15 @@ app.use(passport.session());
 app.post('/auth/signin',
      passport.authenticate('local-signin', {
           successRedirect: '/',
-          failureRedirect: '/'
+          failureRedirect: '/auth/signin/error'
           //failureFlash: true
      }), function (req, res) {
           res.redirect('/');
      }
 );
+app.get('/auth/signin/error', function (req, res) {
+     res.send("<script>alert('아이디가 없거나 비밀번호가 잘못되었습니다.'); history.back();</script>");
+});
 app.post('/auth/signup', function(req, res, next) {
      sqlPool.getConnection(function (err, connection) {
           if (err)  console.error("Error: " + err);
@@ -288,7 +291,7 @@ app.post('/auth/signup', function(req, res, next) {
 
                          // 연결 해제
                          connection.release();
-                         res.send("<script>alert('정상적으로 가입되었습니다!'); history.back();</script>");
+                         res.send("<script>alert('정상적으로 가입되었습니다!\n다시 로그인을 시도하세요.'); history.back();</script>");
                     });
                } else if (bdrows.length == 1) {
                     // 이미 등럭된 유저

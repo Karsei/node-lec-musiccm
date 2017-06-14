@@ -1,3 +1,47 @@
+<%
+
+/***************************
+ * [숫자 3개마다 콤마]
+ * @param number              숫자
+ * @return 3개마다 콤마가 찍힌 문자열
+****************************/
+function _numberWithCommas(number) {
+     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/***************************
+ * [포맷 메소드 추가]
+ * 날짜 포멧 출력
+****************************/
+Date.prototype.format = function (f) {
+     if (!this.valueOf())     return " ";
+
+     var weekNAme = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+     var d = this;
+
+     return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
+          switch ($1) {
+               case "yyyy": return d.getFullYear();
+               case "yy": return (d.getFullYear() % 1000).zf(2);
+               case "MM": return (d.getMonth() + 1).zf(2);
+               case "dd": return d.getDate().zf(2);
+               case "E": return weekName[d.getDay()];
+               case "HH": return d.getHours().zf(2);
+               case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
+               case "mm": return d.getMinutes().zf(2);
+               case "ss": return d.getSeconds().zf(2);
+               case "a/p": return d.getHours() < 12 ? "오전" : "오후";
+               default: return $1;
+          }
+     });
+};
+String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
+String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
+Number.prototype.zf = function (len) { return this.toString().zf(len); };
+
+%>
+
+
 <!DOCTYPE html>
 <html lang="ko">
      <head>
@@ -27,58 +71,39 @@
 
                     <hr>
 
-                    <div class="col-sm-12 mentor-article">
-                         <div class="row mentor-question">
+                    <div class="col-sm-12 mentor-article"><% for (var aidx = 0; aidx < boardData.length; aidx++) { %>
+                         <div class="row mentor-question" data-idx="<%= boardData[aidx].a_id %>">
                               <div class="col-sm-8">
                                    <div class="media">
                                         <div class="media-left">
                                              <img class="img-circle" src="http://placehold.it/60x60" alt="">
                                         </div>
                                         <div class="media-body">
+                                             <h4><%= boardData[aidx].u_nickname %></h4>
+                                             <h6><%= (new Date(boardData[aidx].a_date)).format("yyyy/MM/dd HH:mm:ss") %></h6>
                                              <p>
-                                                  클래식 기타 관리하는 법좀 알려주세요!
-                                                  <input type="button" class="btn-article-reply btn btn-primary" id="" name="" value="댓글">
+                                                  <%= boardData[aidx].a_content %>
+                                                  <button class="btn-article-reply btn btn-primary" onclick="toggleAnswerForm(<%= boardData[aidx].a_id %>);">댓글</button>
                                              </p>
                                         </div>
                                    </div>
                               </div>
                               <div class="col-sm-4"></div>
-                         </div>
-
-                         <div class="row mentor-answer">
-                              <div class="col-sm-offset-4 col-sm-8">
-                                   <div class="media">
-                                        <div class="media-body">
-                                             <p>
-                                                  클래식 기타 관리는...
-                                                  <input type="button" class="btn-article-reply btn btn-primary" id="" name="" value="댓글">
-                                             </p>
-                                             <div class="row mentor-article-reply">
-                                                  <div class="col-xs-7 col-sm-10">
-                                                       <input type="text" class="form-control" name="" value="">
-                                                  </div>
-                                                  <div class="col-xs-2 col-sm-2">
-                                                       <button type="button" class="btn btn-default" name="button">등록</button>
-                                                  </div>
-                                             </div>
-                                        </div>
-                                        <div class="media-right">
-                                             <img class="img-circle" src="http://placehold.it/60x60" alt="">
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
+                         </div><% } %>
+                         <hr>
                     </div>
 
-                    <div class="mentor-bottom">
-                         <form class="row mentor-write">
-                              <div class="col-xs-9 col-sm-11">
-                                   <input type="text" class="form-control" id="mentorInpContent" name="mentorInpContent" value="" placeholder="내용을 입력하세요.">
+                    <div class="col-sm-12 mentor-bottom">
+                         <form class="row mentor-write" method="post" action="/board/mentor/writeok" onsubmit="submitContents(this); return false;">
+                              <div class="col-xs-9 col-sm-11"><% if (loginState) { %>
+                                   <input type="text" class="form-control" id="mentorInpContent" name="mentorInpContent" value="" placeholder="내용을 입력하세요."><% } else { %>
+                                   <input type="text" class="form-control" id="mentorInpContent" name="mentorInpContent" value="" placeholder="로그인을 먼저 진행하세요." disabled><% } %>
                               </div>
                               <div class="col-xs-3 col-sm-1">
-                                   <a class=" btn btn-primary" href="/board/mentor/write" role="button" disabled>글쓰기</a>
+                                   <input type="hidden" id="mentorInpType" name="mentorInpType" value="question"><% if (loginState) { %>
+                                   <input type="submit" class="btn btn-primary" value="글쓰기"><% } else { %>
+                                   <input type="button" class="btn btn-primary" value="글쓰기" disabled><% } %>
                               </div>
-
                          </form>
 
                          <a class="btn btn-default" href="/board/mentor/list" role="button">목록</a>
@@ -98,8 +123,6 @@
                                              </a>
                                         </li>
                                         <li class="active"><a href="#">1</a></li>
-                                        <li class="disabled"><a href="#">2</a></li>
-                                        <li class="disabled"><a href="#">3</a></li>
                                         <li>
                                              <a href="#" aria-label="Next">
                                                   <span aria-hidden="true">&raquo;</span>
@@ -111,7 +134,194 @@
                     </div>
                </div>
           </div>
-
 <% include _foot %>
+          <script type="text/javascript">
+               // 답변 글 전부 가리기
+               var $ansFormlist = $(".mentor-article-answer");
+               $ansFormlist.hide();
+
+               // form 전송
+               function submitContents(form) {
+                    var type = form.mentorInpType;
+
+                    switch (type.value) {
+                         case "question":
+                              if (form.mentorInpContent.value.length < 1) {
+                                   alert("질문할 내용을 입력하세요!");
+                                   form.mentorInpContent.focus();
+                                   return false;
+                              }
+                              break;
+                         case "answer":
+                              if (form.mentorInpAnsContent.value.length < 1) {
+                                   alert("댓글 내용을 입력하세요!");
+                                   form.mentorInpAnsContent.focus();
+                                   return false;
+                              }
+                              break;
+                         case "reply":
+                              if (form.mentorInpReplyContent.value.length < 1) {
+                                   alert("댓글 내용을 입력하세요!");
+                                   form.mentorInpReplyContent.focus();
+                                   return false;
+                              }
+                              break;
+                         default:
+                              return false;
+                              break;
+                    }
+                    form.submit();
+                    return true;
+               }
+
+               function toggleAnswerForm(idx) {
+                    var loginSet = <% if (loginState) { %>true;<% } else { %>false;<% } %>
+                    var $quesList = $(".mentor-question");
+                    for (var i = 0; i < $quesList.length; i++) {
+                         var getid = $($quesList[i]).attr("data-idx");
+                         if (getid == idx) {
+                              $.ajax({
+                                   type: "POST",
+                                   dataType: "json",
+                                   url: API_BOARD_AJAX_URL + "mentorreply",
+                                   data: "query=" + "getReply" +
+                                         "&a_id=" + getid,
+                                   success: function (replylist) {
+                                        var $qList = $(".mentor-question");
+                                        for (var idxx = 0; idxx < $qList.length; idxx++) {
+                                             var gid = $($qList[idxx]).attr("data-idx");
+                                             if (gid == idx) {
+                                                  var  $answerList = $("<div>", { class: "mentor-answer-list ansidx-" + gid })
+                                                  for (var reidx = 0; reidx < replylist.length; reidx++) {
+                                                       var  $answerbox = $("<div>", { class: "row mentor-answer" })
+                                                          , $answerbox_setrow = $("<div>", { class: "col-sm-offset-4 col-sm-8" })
+                                                          , $answerbox_media = $("<div>", { class: "media" })
+                                                          , $answerbox_mediab = $("<div>", { class: "media-body" })
+                                                          , $answerbox_mediar = $("<div>", { class: "media-right" })
+                                                          , $answerbox_replyform = $("<form>", {
+                                                                 class: "row mentor-article-reply",
+                                                                 method: "post",
+                                                                 action: "/board/mentor/writeok",
+                                                                 onsubmit: "submitContents(this); return false;"
+                                                            });
+
+                                                       $answerbox_mediab
+                                                            .append($("<div>", {
+                                                                 class: "mentor-article-reply-list"
+                                                            })).children("div:last")
+                                                            .append($("<h4>").text(replylist[reidx].u_nickname))
+                                                            .append($("<h6>").text((new Date(replylist[reidx].a_date)).format("yyyy/MM/dd HH:mm:ss")))
+                                                            .append($("<p>").text(replylist[reidx].a_content));
+
+                                                       $answerbox_mediar
+                                                            .append($("<img>", {
+                                                                 class: "img-circle",
+                                                                 src: "http://placehold.it/60x60",
+                                                                 alt: "유저 이미지"
+                                                            }));
+
+                                                       $answerbox_media
+                                                            .append($answerbox_mediab)
+                                                            .append($answerbox_mediar);
+
+                                                       $answerbox_setrow
+                                                            .append($answerbox_media);
+
+                                                       $answerbox.append($answerbox_setrow);
+                                                       $answerList.append($answerbox);
+                                                  }
+
+                                                  var  $answerbox = $("<div>", { class: "row mentor-answer" })
+                                                     , $answerbox_setrow = $("<div>", { class: "col-sm-offset-4 col-sm-8" })
+                                                     , $answerbox_replyform = $("<form>", {
+                                                            class: "row mentor-article-reply",
+                                                            method: "post",
+                                                            action: "/board/mentor/writeok",
+                                                            onsubmit: "submitContents(this); return false;"
+                                                       });
+
+                                                  if (loginSet) {
+                                                       $answerbox_replyform
+                                                            .append($("<div>", {
+                                                                 class: "col-xs-7 col-sm-10"
+                                                            })).children("div:last")
+                                                            .append($("<input>", {
+                                                                 type: "text",
+                                                                 class: "form-control",
+                                                                 name: "mentorInpReplyContent",
+                                                                 value: "",
+                                                                 placeholder: "댓글을 입력하세요."
+                                                            }));
+                                                       $answerbox_replyform
+                                                            .append($("<div>", {
+                                                                 class: "col-xs-2 col-sm-2"
+                                                            })).children("div:last")
+                                                            .append($("<input>", {
+                                                                 type: "hidden",
+                                                                 name: "mentorInpId",
+                                                                 value: gid
+                                                            }))
+                                                            .append($("<input>", {
+                                                                 type: "hidden",
+                                                                 name: "mentorInpType",
+                                                                 value: "reply"
+                                                            }))
+                                                            .append($("<input>", {
+                                                                 type: "submit",
+                                                                 class: "btn btn-default",
+                                                                 value: "등록"
+                                                            }));
+                                                  } else {
+                                                       $answerbox_replyform
+                                                            .append($("<div>", {
+                                                                 class: "col-xs-7 col-sm-10"
+                                                            })).children("div:last")
+                                                            .append($("<input>", {
+                                                                 type: "text",
+                                                                 class: "form-control",
+                                                                 name: "mentorInpReplyContent",
+                                                                 value: "",
+                                                                 placeholder: "로그인을 먼저 진행해주세요.",
+                                                                 disabled: ""
+                                                            }));
+                                                       $answerbox_replyform
+                                                            .append($("<div>", {
+                                                                 class: "col-xs-2 col-sm-2"
+                                                            })).children("div:last")
+                                                            .append($("<input>", {
+                                                                 type: "hidden",
+                                                                 name: "mentorInpId",
+                                                                 value: gid,
+                                                            }))
+                                                            .append($("<input>", {
+                                                                 type: "hidden",
+                                                                 name: "mentorInpType",
+                                                                 value: "reply",
+                                                            }))
+                                                            .append($("<input>", {
+                                                                 type: "button",
+                                                                 class: "btn btn-default",
+                                                                 value: "등록",
+                                                                 disabled: ""
+                                                            }));
+                                                  }
+
+                                                  $answerbox_setrow
+                                                       .append($answerbox_replyform);
+
+                                                  $answerbox.append($answerbox_setrow);
+                                                  $answerList.append($answerbox);
+                                                  $($qList[idxx]).after($answerList);
+                                             }
+                                        }
+                                   },
+                                   error: function (req, status, err) {
+                                        console.error("code: " + req.status + "\n" + req.responseText + "\n" + "error: " + err);
+                                   }
+                              });
+                         }
+                    }
+               }
+          </script>
      </body>
 </html>

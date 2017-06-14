@@ -92,7 +92,7 @@
                          <div class="form-group">
                               <label for="writeYoutubeURL" class="col-sm-2 control-label">Youtube 영상 주소</label>
                               <div class="col-sm-10">
-                                   <input id="writeYoutubeURL" name="writeYoutubeURL" type="text" class="form-control" placeholder="Youtube 영상 주소를 입력하세요. (예: https://www.youtube.com/watch?v=cwHgJudJ_Rc)" />
+                                   <input id="writeYoutubeURL" name="writeYoutubeURL" type="text" class="form-control" placeholder="Youtube 영상 주소를 입력하세요. (예: https://www.youtube.com/watch?v=cwHgJudJ_Rc)" required />
                               </div>
                          </div>
 <% } %>
@@ -123,15 +123,32 @@
                     //filebrowserImageUploadUrl: '/uploads'
                });
 
+               function checkYTid(url) {
+                    var p = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+                    return (url.match(p)) ? RegExp.$1 : false;
+               }
+
                function submitContents(elClickedObj) {
                     var editor = CKEDITOR.instances.writeInpContent
                       , editor_Data = editor.getData();
 
                     if (E("writeInpTitle").value.length < 1) {
                          alert("제목을 입력해주세요!");
+                         E("writeInpTitle").focus();
+                         return;
+                    }
+<% if (bid == "play") { %>
+                    if (E("writeYoutubeURL").value.length < 1) {
+                         alert("유튜브 영상 주소를 입력해주세요!");
+                         E("writeYoutubeURL").focus();
                          return;
                     }
 
+                    if (!checkYTid(E("writeYoutubeURL").value)) {
+                         alert("주소는 아래와 같은 형식이어야 합니다!\n \nhttps://www.youtube.com/watch?v=영상고유ID");
+                         return;
+                    }
+<% } %>
                     if (editor_Data.length < 1) {
                          alert("내용을 입력해주세요!");
                          return;

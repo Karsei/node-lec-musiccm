@@ -5,7 +5,7 @@ Author By. Jin-Yong, Lee
 **/
 
 
-const API_KEYWORD_AJAX_URL = "http://project.karsei.pe.kr:5010/board/keyword";
+const API_BOARD_AJAX_URL = "http://project.karsei.pe.kr:5010/board/";
 
 /***************************
 * [엘레멘트 가져오기]
@@ -120,14 +120,12 @@ function Board_Search(EFormObj) {
 }
 
 ;(function () {
-     console.log("Working well");
-
      // 실시간 검색 출력
      var $keyul = $(".rtkeyword");
      $.ajax({
           type: "POST",
           dataType: "json",
-          url: API_KEYWORD_AJAX_URL,
+          url: API_BOARD_AJAX_URL + "keyword",
           data: "query=" + "getKeyword",
           success: function (keylist) {
                for (var i = 0; i < keylist.length; i++) {

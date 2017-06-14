@@ -22,6 +22,13 @@ module.exports = {
                "parentMenu": ""
           },
           {
+               "value": "공지사항",
+               "href": "board/notice",
+               "selected": "",
+               "isSubmenu": true,
+               "parentMenu": "커뮤니티"
+          },
+          {
                "value": "연주 게시판",
                "href": "board/play",
                "selected": "",

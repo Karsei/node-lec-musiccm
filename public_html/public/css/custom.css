@@ -131,10 +131,18 @@ table > thead > tr > th {
      background-color: #5cb85c;
      border-color: #4cae4c;
 }
+.btn-naver:hover {
+     color: #fff;
+     background-color: #71ba71;
+}
 .btn-facebook {
      color: #fff;
      background-color: #337ab7;
      border-color: #2e6da4;
+}
+.btn-facebook:hover {
+     color: #fff;
+     background-color: #4682b5;
 }
 .btn-primary {
      color: #000;
@@ -221,6 +229,7 @@ table > thead > tr > th {
 ******************************************************/
 .index-list {
      margin-top: 20px;
+     margin-bottom: 50px;
 }
 
 .index-notice > ul {
@@ -235,7 +244,11 @@ table > thead > tr > th {
 .index-notice > ul > li:hover {
      background-color: #f7f7f7;
 }
-.index-notice > ul > li > span {
+.index-notice > ul > li > a {
+     color: #000;
+     text-decoration: none;
+}
+.index-notice > ul > li > a > span {
      margin-right: 20px;
 }
 
@@ -264,6 +277,60 @@ table > thead > tr > th {
 
 /*****************************************************
  *
+ * [About]
+ *
+******************************************************/
+.about-list {
+}
+.about-list .about-head {
+     margin-bottom: 50px;
+     padding-bottom: 15px;
+     border-bottom: 1px solid gray;
+}
+.about-list .about-content1 {
+     margin-bottom: 50px;
+     line-height: 20pt;
+}
+.about-list .about-content1 h3 {
+     color: #e09100;
+}
+.about-list .about-content2 {
+     margin: 0 auto;
+}
+.about-list .about-content2 h4 {
+     margin-top: 30px;
+     margin-bottom: 10px;
+     font-size: 18pt;
+}
+.about-list .about-content2 ol > li {
+     line-height: 30pt;
+     font-size: 12pt;
+}
+
+
+/*****************************************************
+ *
+ * [Notice Board]
+ *
+******************************************************/
+.notice-list {
+}
+
+.notice-bottom .notice-search {
+     text-align: center;
+}
+.notice-bottom .notice-pagination {
+     text-align: center;
+}
+
+.notice-article a {
+     text-decoration: none;
+     color: #000;
+}
+
+
+/*****************************************************
+ *
  * [Mentor Board]
  *
 ******************************************************/
@@ -279,7 +346,7 @@ table > thead > tr > th {
      vertical-align: baseline;
 }
 .mentor-question .media-body,
-.mentor-answer .media-body {
+.mentor-answer .media-body .mentor-article-reply-list {
      background-color: #f7f7f7;
 }
 .mentor-question .media-body .btn-article-reply,
@@ -291,13 +358,19 @@ table > thead > tr > th {
      border-radius: 10px;
      padding-left: 20px;
 }
-.mentor-answer .media-body {
+.mentor-answer .media-body .mentor-article-reply-list {
      border: 2px solid #ccc;
      border-radius: 10px;
-     padding-left: 20px;
+     padding: 20px 20px 10px 20px;
+     vertical-align: baseline;
+     margin-bottom: 10px;
 }
+.mentor-question .media-body .mentor-article-answer,
 .mentor-answer .media-body .mentor-article-reply {
      margin-bottom: 10px;
+}
+.mentor-answer-list {
+     margin-bottom: 20px;
 }
 
 .mentor-bottom .mentor-write {
@@ -346,14 +419,15 @@ table > thead > tr > th {
 .play-popular .play-popular-article {
      position: relative;
      padding: 20px;
-     height: 320px;
+     height: 280px;
      margin-bottom: 10px;
-     border: 5px solid #fff;
-     background-color: #eee;
-     transition: background-color 0.5s;
+     border: 5px solid #f7f2e1;
+     background-color: #fffcf2;
+     transition: background-color 0.5s, border-color 0.5s;
 }
 .play-popular .play-popular-article:hover {
      background-color: #ffecd6;
+     border-color: #ff9214;
 }
 .play-popular .play-popular-article .play-title {
      margin-bottom: 0px;
@@ -373,10 +447,11 @@ table > thead > tr > th {
      margin-bottom: 10px;
      border: 5px solid #fff;
      background-color: #eee;
-     transition: background-color 0.5s;
+     transition: background-color 0.5s, border-color 0.5s;
 }
 .play-article:hover {
      background-color: #ffecd6;
+     border-color: #ff9214;
 }
 .play-article .play-title {
      margin-bottom: 0px;
@@ -420,11 +495,13 @@ table > thead > tr > th {
      position: relative;
      padding: 10px;
      margin-bottom: 10px;
+     border: 5px solid #fff;
      background-color: #eee;
-     transition: background-color 0.5s;
+     transition: background-color 0.5s, border-color 0.5s;
 }
 .sheet-article:hover {
      background-color: #ffecd6;
+     border-color: #ff9214;
 }
 .sheet-article .sheet-id {
      font-size: 20pt;
@@ -471,7 +548,7 @@ table > thead > tr > th {
 ******************************************************/
 .view-article {
      padding: 20px;
-     background-color: #f7f7f9;
+     /*background-color: #f7f7f9;*/
      margin-bottom: 20px;
 }
 .view-article .view-head,
@@ -524,15 +601,43 @@ table > thead > tr > th {
  *
 ******************************************************/
 .board-search > input[type=text] {
+     margin-right: 10px;
      padding: 10px;
-     width: 250px;
+     width: 0px;
      height: 40px;
      vertical-align: baseline;
+
+     background-color: transparent;
+     border: 0;
+     border-radius: 0;
+     outline: none;
+     box-shadow: none;
+     border-color: transparent;
+     color: #000;
+     border-bottom: 1px solid #ccc;
+     transition: width 0.5s;
 }
+.board-search > input[type=text]::-webkit-input-placeholder {
+     color: #000;
+}
+.board-search > input[type=text]:focus {
+     outline: none !important;
+     width: 250px;
+}
+
 .board-search > input[type=submit] {
      height: 40px;
      border-radius: 0px;
 }
+
+
+/*
+.search-form input[type=text] {
+
+
+     width: 20px;
+     transition: width 0.5s;
+}*/
 
 /*****************************************************
  *

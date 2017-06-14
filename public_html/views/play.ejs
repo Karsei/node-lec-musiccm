@@ -82,16 +82,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          <hr/>
                          <div class="well play-popular">
                               <h2><span class="glyphicon glyphicon-star"></span>인기 게시물</h2>
-                              <div class="row popular-list"><% for (var i = 0; i < boardData.length; i++) { %><% if (i == 3) { break; } %>
-                                   <a href="/board/play/view/<%= boardData[i].a_id %>">
-                                        <div class="col-sm-4 play-popular-article">
-                                             <p class="play-popular-id"><%= boardData[i].a_id %></p>
-                                             <p class="play-popular-img text-center"><img src="<%= boardData[i].a_youtubethum %>" class="img-thumbnail" alt=""></p>
-                                             <h4 class="play-popular-title"><%= boardData[i].a_title %> <small><label class="label label-info"><%= boardData[i].c_name %></label></small></h4>
-                                             <p class="play-popular-nickname"><%= boardData[i].u_nickname %><br><span class="play-date"><%= (new Date(boardData[i].a_date)).format("yyyy/MM/dd HH:mm:ss") %></span></p>
-                                             <p class="play-popular-content"><%- _trimDotString(striptags(boardData[i].a_content), 50) %></p>
-                                        </div><% } %>
-                                   </a>
+                              <div class="row popular-list">
                               </div>
                          </div>
                          <hr/>
@@ -136,8 +127,8 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                                        <span aria-hidden="true">&laquo;</span>
                                                   </a>
                                              </li><% for (var idx = boardPaging.PAGE_START; idx <= boardPaging.PAGE_END; idx++) { %><% if (idx != boardPaging.PAGE_CURRENT) { %>
-                                             <li><a href="#"><%= idx %></a></li><% } else { %>
-                                             <li class="active"><a href="#"><%= idx %></a></li><% } %><% } %>
+                                             <li><a href="/board/play/list/<%= idx %>"><%= idx %></a></li><% } else { %>
+                                             <li class="active"><a href="/board/play/list/<%= idx %>"><%= idx %></a></li><% } %><% } %>
                                              <li>
                                                   <a href="/board/play/list/<%= boardPaging.PAGE_END %>" aria-label="Next">
                                                        <span aria-hidden="true">&raquo;</span>
@@ -152,5 +143,71 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
           </div>
 
 <% include _foot %>
+          <script type="text/javascript">
+               $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: API_BOARD_AJAX_URL + "getList",
+                    data: "query=" + "getViewList" +
+                          "&brdid=" + "mc_playboard" +
+                          "&startlist=" + "0" +
+                          "&endlist=" + "3" +
+                          "&bid=" + "play_nocate"
+                    ,
+                    success: function (poplist) {
+                         console.log(poplist);
+                         var $pList = $(".popular-list");
+                         for (var idx = 0; idx < poplist.length; idx++) {
+                              var  $abox = $("<a>", {
+                                        href: "/board/play/view/" + poplist[idx].a_id
+                                   })
+                                 , $article = $("<div>", {
+                                        class: "col-sm-4 play-popular-article"
+                                   });
+
+                              $article
+                                   .append($("<p>", {
+                                        class: "play-popular-id"
+                                   }).text(poplist[idx].a_id));
+                              $article
+                                   .append($("<p>", {
+                                        class: "play-popular-img text-center"
+                                   })).children("p:last")
+                                   .append($("<img>", {
+                                        src: poplist[idx].a_youtubethum,
+                                        class: "img-thumbnail",
+                                        alt: ""
+                                   }))
+                              $article
+                                   .append($("<h4>", {
+                                        class: "play-popular-title"
+                                   })).children("h4:last")
+                                   .append($("<span>").text(poplist[idx].a_title)).children("span:last")
+                                   .append($("<small>")).children("small:last")
+                                   .append($("<label>", {
+                                        class: "label label-info"
+                                   }).text());
+                              $article
+                                   .append($("<p>", {
+                                        class: "play-popular-nickname"
+                                   })).children("p:last")
+                                   .append($("<span>").text(poplist[idx].u_nickname))
+                                   .append($("<br>"))
+                                   .append($("<span>", {
+                                        class: "play-date"
+                                   }).text((new Date(poplist[idx].a_date)).format("yyyy/MM/dd HH:mm:ss")));
+                              /*$article
+                                   .append($("<p>", {
+                                        class: "play-popular-content"
+                                   }).text(_trimDotString(striptags($pList.a_content), 50)));*/
+                              $abox.append($article);
+                              $pList.append($abox);
+                         }
+                    },
+                    error: function (req, status, err) {
+                         console.error("code: " + req.status + "\n" + req.responseText + "\n" + "error: " + err);
+                    }
+               });
+          </script>
      </body>
 </html>

@@ -98,6 +98,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                     <p><%= boardInfo.desc %></p>
                     <hr>
 
+<% if (boardCategory != undefined && boardCategory.length > 0) { %>
                     <div class="col-sm-2">
                          <ul class="nav nav-pills nav-stacked"><% for (var i = 0; i < boardCategory.length; i++) { %>
                               <li role="presentation"><a href="/board/<%= bid %>/list/1?category=<%= boardCategory[i].id %>"><%= boardCategory[i].name %></a></li><% } %>
@@ -118,15 +119,12 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                         <p class="view-head"><%= (new Date(boardData[0].a_date)).format("yyyy/MM/dd HH:mm:ss") %></p>
                                    </div>
                               </div>
-
-<% if (bid == "sheet" || bid == "play") { %>
                               <div class="form-group">
                                    <label class="col-sm-2 control-label">카테고리</label>
                                    <div class="col-sm-10">
                                         <p class="view-head"><%= boardData[0].c_name %></p>
                                    </div>
                               </div>
-<% } %>
                               <div class="form-group">
                                    <label class="col-sm-2 control-label">제목</label>
                                    <div class="col-sm-10">
@@ -161,6 +159,48 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                               </div>
                          </div>
                     </div>
+<% } else { %>
+                    <div class="col-sm-12">
+                         <form class="form-horizontal view-article">
+                              <div class="form-group">
+                                   <label class="col-sm-2 control-label">작성자</label>
+                                   <div class="col-sm-10">
+                                        <p class="view-head"><%= boardData[0].u_nickname %></p>
+                                   </div>
+                              </div>
+                              <div class="form-group">
+                                   <label class="col-sm-2 control-label">작성일</label>
+                                   <div class="col-sm-10">
+                                        <p class="view-head"><%= (new Date(boardData[0].a_date)).format("yyyy/MM/dd HH:mm:ss") %></p>
+                                   </div>
+                              </div>
+                              <div class="form-group">
+                                   <label class="col-sm-2 control-label">제목</label>
+                                   <div class="col-sm-10">
+                                        <p class="view-head"><%= boardData[0].a_title %></p>
+                                   </div>
+                              </div>
+                              <div class="form-group">
+                                   <label class="col-sm-2 control-label">내용</label>
+                                   <div class="col-sm-10">
+                                        <div class="view-content">
+                                             <%- boardData[0].a_content %>
+                                        </div>
+                                   </div>
+                              </div>
+                         </form>
+
+                         <div class="view-bottom">
+                              <div class="view-option">
+                                   <a class="btn btn-default" href="/board/<%= bid %>/list" role="button">목록</a>
+                                   <div class="view-bottom-right"><% if (boardData[0].a_user == loginUser) { %>
+                                        <a class="btn btn-danger" href="/board/<%= bid %>/delete/<%= boardData[0].a_id %>" role="button">삭제</a>
+                                        <a class="btn btn-primary" href="/board/<%= bid %>/modify/<%= boardData[0].a_id %>" role="button">수정</a>
+                                   </div><% } %>
+                              </div>
+                         </div>
+                    </div>
+<% } %>
                </div>
           </div>
 
