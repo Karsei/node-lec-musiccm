@@ -87,7 +87,7 @@ passport.use('local-signin', new LocalStrategy({
 
                               // 연결 해제
                               connection.release();
-                              return done(null, false, { message: "등록된 아이디가 없거나 비밀번호가 다릅니다." });
+                              return done(null, false, null);
                          }
                     });
                });
@@ -278,8 +278,11 @@ app.get('/auth/signin/:typeset', function (req, res) {
           case "registered":
                res.send("<script>alert('이미 등록된 유저입니다.'); history.back();</script>");
                break;
-          case "registered":
+          case "fault":
                res.send("<script>alert('잘못된 접근입니다.'); history.back();</script>");
+               break;
+          case "error":
+               res.send("<script>alert('아이디가 없거나 비밀번호가 잘못되었습니다.'); history.back();</script>");
                break;
      }
 
