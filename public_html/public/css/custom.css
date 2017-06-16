@@ -14,6 +14,9 @@ body {
      overflow-x: hidden;
 }
 
+a {
+     color: #eb7f00;
+}
 a > .glyphicon {
      margin-right: 5px;
 }
@@ -26,6 +29,9 @@ table > thead > tr > th {
 }
 .btn-width100 {
      width: 100px;
+}
+.btn-local {
+     margin-bottom: 18px;
 }
 .fill-lemon {
      border: 0;
@@ -42,13 +48,13 @@ table > thead > tr > th {
 ****************************************/
 @media screen and (max-width: 1199px) {
      body {
-          padding-top: 100px;
+          padding-top: 50px;
      }
 }
 
 @media screen and (max-width: 991px) {
      body {
-          padding-top: 100px;
+          padding-top: 50px;
      }
 }
 
@@ -61,6 +67,9 @@ table > thead > tr > th {
      /********************************************
       * Menu
      *********************************************/
+     .navbar-default .navbar-nav .open .dropdown-menu>li>a {
+          color: #fff;
+     }
 
      /********************************************
       * SHEET
@@ -600,7 +609,7 @@ table > thead > tr > th {
  * [BOARD - Search]
  *
 ******************************************************/
-.board-search > input[type=text] {
+.board-search input[type=text] {
      margin-right: 10px;
      padding: 10px;
      width: 0px;
@@ -617,17 +626,19 @@ table > thead > tr > th {
      border-bottom: 1px solid #ccc;
      transition: width 0.5s;
 }
-.board-search > input[type=text]::-webkit-input-placeholder {
+.board-search input[type=text]::-webkit-input-placeholder {
      color: #000;
 }
-.board-search > input[type=text]:focus {
+.board-search input[type=text]:focus {
      outline: none !important;
      width: 250px;
 }
-
-.board-search > input[type=submit] {
+.board-search input[type=submit] {
      height: 40px;
      border-radius: 0px;
+}
+.board-search .form-control-feedback {
+     right: 55px !important;
 }
 
 

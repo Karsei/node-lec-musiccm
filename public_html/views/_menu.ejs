@@ -53,7 +53,29 @@
                          </div>
                          <div class="modal-body signin">
                               <p>지금 바로 로그인해서<br>더 많은 음악들을 즐겨보세요!</p>
-                              <form class="form-horizontal" method="post">
+                              <div class="row">
+                                   <form class="form-horizontal" method="post">
+                                        <div class="col-sm-9">
+                                             <div class="form-group">
+                                                  <label for="signInpEmail" class="col-sm-3 control-label">이메일</label>
+                                                  <div class="col-sm-9">
+                                                       <input type="email" class="form-control" id="signInpEmail" name="signInpEmail" placeholder="이메일을 입력하세요." required>
+                                                  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                  <label for="signInpPassword" class="col-sm-3 control-label">비밀번호</label>
+                                                  <div class="col-sm-9">
+                                                       <input type="password" class="form-control" id="signInpPassword" name="signInpPassword" placeholder="비밀번호를 입력하세요." required>
+                                                  </div>
+                                             </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                             <input type="button" class="btn btn-default btn-width100 btn-local fill-lemon" onclick="btnMenuSignin(this);" value="로그인" name="button">
+                                             <input type="button" class="btn btn-default btn-width100 btn-local fill-gray" onclick="btnMenuSignUp(this);" value="이렇게 가입" name="button">
+                                        </div>
+                                   </form>
+                              </div>
+                              <!--form class="form-horizontal" method="post">
                                    <div class="form-group">
                                         <label for="signInpEmail" class="col-sm-2 control-label">이메일</label>
                                         <div class="col-sm-7">
@@ -72,7 +94,7 @@
                                              <input type="button" class="btn btn-default btn-width100 fill-gray" onclick="btnMenuSignUp(this);" value="이렇게 가입" name="button">
                                         </div>
                                    </div>
-                              </form>
+                              </form-->
                               <ul>
                                    <li><a class="btn btn-naver btn-width200" href="/auth/login/naver">네이버로 로그인</a></li>
                                    <li><a class="btn btn-facebook btn-width200" href="/auth/login/facebook">페이스북으로 로그인</a></li>

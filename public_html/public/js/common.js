@@ -81,7 +81,7 @@ function btnMenuSignin(elClickedObj) {
           return;
      }
 
-     $(".signin > form").attr("action", "/auth/signin");
+     $(".signin form").attr("action", "/auth/signin");
 
      try {
           elClickedObj.form.submit();
@@ -100,7 +100,7 @@ function btnMenuSignUp(elClickedObj) {
           return;
      }
 
-     $(".signin > form").attr("action", "/auth/signup");
+     $(".signin form").attr("action", "/auth/signup");
 
      try {
           elClickedObj.form.submit();
@@ -109,7 +109,6 @@ function btnMenuSignUp(elClickedObj) {
 
 // 폼
 function Board_Search(EFormObj) {
-     console.log("예스");
      if (EFormObj.InpBoardSearch.value.length < 1) {
           alert("검색어를 입력해주세요!");
           EFormObj.InpBoardSearch.focus();

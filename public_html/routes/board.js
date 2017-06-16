@@ -538,6 +538,14 @@ router.get('/:bid/view/:number', function(req, res, next) {
 
                               board_data = arows;
 
+                              // 조회수 증가
+                              q = "UPDATE " + brdid + " AS BOARD " +
+                                  "SET BOARD.view = BOARD.view+1 " +
+                                  "WHERE (BOARD.id = " + req.params.number + ");";
+                              connection.query(q, function (vuerr, vurows) {
+                                   if (vuerr)  console.error("Error: " + vuerr);
+                              });
+
                               // 로그인 상태 파악 후 메뉴 구성
                               var loginstate = common.getUserState(req);
                               common.activeMenu(menus, req.params.bid);
