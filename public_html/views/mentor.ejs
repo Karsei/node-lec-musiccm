@@ -109,18 +109,18 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          <a class="btn btn-default" href="/board/mentor/list" role="button">목록</a>
 
                          <div class="mentor-search">
-                              <form class="board-search form-inline" name="board-search" action="/board/mentor/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                              <!--form class="board-search form-inline" name="board-search" action="/board/mentor/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                    <div class="form-group has-feedback">
                                         <input type="text" id="search" name="search" value="" class="form-control" aria-describedby="inputSearchStatus" placeholder="내용 기준">
                                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                                         <span id="inputSearchStatus" class="sr-only">(검색)</span>
                                         <input type="submit" class="btn btn-default" value="검색">
                                    </div>
-                              </form>
-                              <!--form class="board-search" name="board-search" action="/board/mentor/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                              </form-->
+                              <form class="board-search" name="board-search" action="/board/mentor/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                    <input type="text" id="search" name="search" value="" placeholder="내용 기준">
                                    <input type="submit" class="btn btn-default" value="검색">
-                              </form-->
+                              </form>
                          </div>
                          <div class="mentor-pagination">
                               <nav aria-label="Page navigation">

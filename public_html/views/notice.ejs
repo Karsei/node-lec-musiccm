@@ -98,14 +98,18 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                          <a class="btn btn-default" href="/board/notice/list" role="button">목록</a>
 
                          <div class="notice-search">
-                              <form class="board-search form-inline" name="board-search" action="/board/notice/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                              <form class="board-search" name="board-search" action="/board/notice/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                   <input type="text" id="search" name="search" value="" placeholder="제목 기준">
+                                   <input type="submit" class="btn btn-default" value="검색">
+                              </form>
+                              <!--form class="board-search form-inline" name="board-search" action="/board/notice/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                    <div class="form-group has-feedback">
                                         <input type="text" id="search" name="search" value="" class="form-control" aria-describedby="inputSearchStatus" placeholder="제목 기준">
                                         <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
                                         <span id="inputSearchStatus" class="sr-only">(검색)</span>
                                         <input type="submit" class="btn btn-default" value="검색">
                                    </div>
-                              </form>
+                              </form-->
                          </div>
                          <div class="notice-pagination">
                               <nav aria-label="Page navigation">

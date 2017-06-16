@@ -270,8 +270,19 @@ app.post('/auth/signin',
           res.redirect('/');
      }
 );
-app.get('/auth/signin/error', function (req, res) {
-     res.send("<script>alert('아이디가 없거나 비밀번호가 잘못되었습니다.'); history.back();</script>");
+app.get('/auth/signin/:typeset', function (req, res) {
+     switch (req.params.typeset) {
+          case "ok":
+               res.send("<script>alert('정상적으로 가입이 되었습니다. 다시 로그인을 시도해주세요!'); history.back();</script>");
+               break;
+          case "registered":
+               res.send("<script>alert('이미 등록된 유저입니다.'); history.back();</script>");
+               break;
+          case "registered":
+               res.send("<script>alert('잘못된 접근입니다.'); history.back();</script>");
+               break;
+     }
+
 });
 app.post('/auth/signup', function(req, res, next) {
      sqlPool.getConnection(function (err, connection) {
@@ -289,9 +300,12 @@ app.post('/auth/signup', function(req, res, next) {
                     connection.query(q, function (err3, isurows) {
                          if (err3)  console.error("Error: " + err3);
 
+                         console.log("가입합시다!");
+
                          // 연결 해제
                          connection.release();
-                         res.send("<script>alert('정상적으로 가입되었습니다!\n다시 로그인을 시도하세요.'); history.back();</script>");
+                         res.redirect('/auth/signin/ok');
+                         //res.send("<script>alert('정상적으로 가입되었습니다!\n다시 로그인을 시도하세요.'); history.back();</script>");
                     });
                } else if (bdrows.length == 1) {
                     // 이미 등럭된 유저
@@ -299,13 +313,16 @@ app.post('/auth/signup', function(req, res, next) {
 
                     // 연결 해제
                     connection.release();
-                    res.send("<script>alert('이미 등록된 유저입니다!\n다른 아이디로 시도해보세요.'); history.back();</script>");
+                    res.redirect('/auth/signin/registered');
+                    //res.send("<script>alert('이미 등록된 유저입니다!\n다른 아이디로 시도해보세요.'); history.back();</script>");
                } else {
                     // 잘못된 데이터베이스
                     console.log("잘못된 정보");
+
                     // 연결 해제
                     connection.release();
-                    res.send("<script>alert('잘못된 접근입니다.'); history.back();</script>");
+                    res.redirect('/auth/signin/fault');
+                    //res.send("<script>alert('잘못된 접근입니다.'); history.back();</script>");
                }
           });
      });

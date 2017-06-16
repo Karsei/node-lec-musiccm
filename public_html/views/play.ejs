@@ -113,7 +113,12 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                    <a class="btn btn-primary" href="/board/play/write" role="button">글쓰기</a>
                               </div>
                               <div class="play-search">
-                                   <form class="board-search form-inline" name="board-search" action="/board/play/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                   <form class="board-search" name="board-search" action="/board/play/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                        <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
+                                        <input type="text" id="search" name="search" value="" placeholder="제목 기준">
+                                        <input type="submit" class="btn btn-default" value="검색">
+                                   </form>
+                                   <!--form class="board-search form-inline" name="board-search" action="/board/play/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                         <div class="form-group has-feedback">
                                              <input type="text" id="search" name="search" value="" class="form-control" aria-describedby="inputSearchStatus" placeholder="제목 기준">
                                              <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
@@ -121,7 +126,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                              <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
                                              <input type="submit" class="btn btn-default" value="검색">
                                         </div>
-                                   </form>
+                                   </form-->
                               </div>
                               <div class="play-pagination">
                                    <nav aria-label="Page navigation">
@@ -159,7 +164,6 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                           "&bid=" + "play_nocate"
                     ,
                     success: function (poplist) {
-                         console.log(poplist);
                          var $pList = $(".popular-list");
                          for (var idx = 0; idx < poplist.length; idx++) {
                               var  $abox = $("<a>", {
@@ -207,6 +211,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                               $abox.append($article);
                               $pList.append($abox);
                          }
+                         $(".popular-list").slideDown(1000);
                     },
                     error: function (req, status, err) {
                          console.error("code: " + req.status + "\n" + req.responseText + "\n" + "error: " + err);

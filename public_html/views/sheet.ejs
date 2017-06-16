@@ -118,7 +118,12 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                    </div>
                               </div>
                               <div class="sheet-search">
-                                   <form class="board-search form-inline" name="board-search" action="/board/sheet/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                   <form class="board-search" name="board-search" action="/board/sheet/list/1" method="get" onsubmit="Board_Search(this); return false;">
+                                        <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
+                                        <input type="text" id="search" name="search" value="" placeholder="제목 기준">
+                                        <input type="submit" class="btn btn-default" value="검색">
+                                   </form>
+                                   <!--form class="board-search form-inline" name="board-search" action="/board/sheet/list/1" method="get" onsubmit="Board_Search(this); return false;">
                                         <div class="form-group has-feedback">
                                              <input type="text" id="search" name="search" value="" class="form-control" aria-describedby="inputSearchStatus" placeholder="제목 기준">
                                              <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
@@ -126,7 +131,7 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                                              <input type="hidden" id="category" name="category" value="<%= queryCategory %>">
                                              <input type="submit" class="btn btn-default" value="검색">
                                         </div>
-                                   </form>
+                                   </form-->
                               </div>
                               <div class="sheet-pagination">
                                    <nav aria-label="Page navigation">

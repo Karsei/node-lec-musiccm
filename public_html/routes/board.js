@@ -173,14 +173,14 @@ router.get('/:bid/list/:number', function(req, res, next) {
                                              if (board_Paging.PAGE_END > board_Paging.TOTAL_PAGE) {
                                                   board_Paging.PAGE_END = board_Paging.TOTAL_PAGE;
                                              }
-
+                                             /*
                                              console.log("TOTAL_ROW: " + board_Paging.TOTAL_ROW);
                                              console.log("SHOW_COUNT: " + board_Paging.SHOW_COUNT);
                                              console.log("PAGE_CURRENT: " + board_Paging.PAGE_CURRENT);
                                              console.log("TOTAL_PAGE: " + board_Paging.TOTAL_PAGE);
                                              console.log("PAGE_START: " + board_Paging.PAGE_START);
                                              console.log("PAGE_END: " + board_Paging.PAGE_END);
-
+                                             */
                                              // 게시판 목록 가져오기
                                              q = "SELECT " + getSelectQuery(req.params.bid) + " " +
                                                  "FROM " + brdid + " AS BOARD, " + cateid + " AS CATE, mc_users AS USERLIST " +
@@ -190,7 +190,6 @@ router.get('/:bid/list/:number', function(req, res, next) {
                                                  ((url_query.search != undefined) ? "AND (BOARD.title LIKE '%" + url_query.search + "%') " : " ") +
                                                  "ORDER BY BOARD.id DESC " +
                                                  "LIMIT " + ((board_Paging.PAGE_CURRENT - 1) * board_Paging.SHOW_COUNT) + ", " + board_Paging.SHOW_COUNT + ";";
-                                             console.log(q);
                                              connection.query(q, function (bderr, bdrows) {
                                                   if (bderr)  console.error("Error: " + bderr);
                                                   //console.log("(Board Data) rows: " + JSON.stringify(bdrows));
