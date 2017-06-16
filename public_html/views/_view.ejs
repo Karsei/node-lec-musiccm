@@ -135,7 +135,9 @@ Number.prototype.zf = function (len) { return this.toString().zf(len); };
                               <div class="form-group">
                                    <label class="col-sm-2 control-label">영상</label>
                                    <div class="col-sm-10">
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= boardData[0].a_youtubeid %>" frameborder="0" allowfullscreen></iframe>
+                                        <div class="playvideo">
+                                             <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= boardData[0].a_youtubeid %>" frameborder="0" allowfullscreen></iframe>
+                                        </div>
                                    </div>
                               </div>
 <% } %>

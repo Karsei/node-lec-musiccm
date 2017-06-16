@@ -65,7 +65,9 @@
                     <div class="col-sm-6 index-topplay">
                          <h3><span class="glyphicon glyphicon-facetime-video"></span> 금주의 영상</h3>
                          <hr>
-                         <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+                         <div class="playvideo">
+                              <iframe width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
+                         </div>
                     </div>
                </div>
           </div>
@@ -158,7 +160,7 @@
                           "&bid=" + "play_nocate"
                     ,
                     success: function (playTopList) {
-                         var $topplay_iframe = $(".index-topplay iframe");
+                         var $topplay_iframe = $(".index-topplay .playvideo iframe");
                          $topplay_iframe.attr("src", "https://www.youtube.com/embed/" + playTopList[0].a_youtubeid);
                     },
                     error: function (req, status, err) {
