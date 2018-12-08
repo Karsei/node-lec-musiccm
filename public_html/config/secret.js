@@ -13,23 +13,23 @@ module.exports = {
      },
      'federation': {
           'naver': {
-               'client_id': 'EYLUzQM0k_ZoddYsPr97',
-               'secret_id': '88cKQcCZg5',
+               'client_id': '____CLIENT_ID____',
+               'secret_id': '____SECRET_ID____',
                'callback_url': '/auth/login/naver/callback'
           },
           'facebook': {
-               'client_id': '1324170261032318',
-               'secret_id': 'dc766c8d4c934276643c43d9f0e913a8',
+               'client_id': '____CLIENT_ID____',
+               'secret_id': '____SECRET_ID____',
                'callback_url': '/auth/login/facebook/callback'
           }
      },
      'sql': {
           'host': 'localhost',
-          'user': 'musiccm',
-          'database': 'musiccm',
-          'password': 'musiccmpass'
+          'user': '____USER____',
+          'database': '____DATABASE____',
+          'password': '____PASSWORD____'
      },
      'google': {
-          'api_key': 'AIzaSyD8kIb9Qp-b4y-oahMl3Ik-7QPIlkTT6J4'
+          'api_key': '____API_KEY____'
      }
 }

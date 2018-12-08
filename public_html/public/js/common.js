@@ -5,7 +5,7 @@ Author By. Jin-Yong, Lee
 **/
 
 
-const API_BOARD_AJAX_URL = "http://project.karsei.pe.kr:5010/board/";
+const API_BOARD_AJAX_URL = "http://YOUR_HOMEPAGE/board/";
 
 /***************************
 * [엘레멘트 가져오기]
